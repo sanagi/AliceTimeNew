@@ -1,0 +1,7 @@
+*.csproj
+AliceTime/Library/
+AliceTime/UserSettings/
+AliceTime/obj/
+AliceTime/Logs/
+AliceTime/.idea/
+AliceTime/Temp/

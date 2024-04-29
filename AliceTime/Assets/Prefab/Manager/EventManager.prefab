@@ -1,0 +1,120 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &195570
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 427342}
+  - component: {fileID: 11425454}
+  - component: {fileID: 5819334950364873857}
+  m_Layer: 0
+  m_Name: EventManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &427342
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 195570}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &11425454
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 195570}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6de21e8278bed7469a569aafbeae0d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pathSaveData: 
+  saveData:
+    AppVersion: 0
+    LastLoginTime: 0
+    option:
+      bgmVolume: 0.2
+      seVolume: 1
+      languageType: 1
+      controllerPositionRate: 0.5
+      controllerSizeRate: 0.5
+      textSpeed: 0.5
+      foldAnimationSKip: 0
+      moveSpeed: 1
+    story: []
+    trial: []
+    trialPhase: 1
+    continueData:
+      stageNumber: -1
+      areaNumber: -1
+      respawnPosition: {x: 0, y: 0, z: 0}
+      isCreate: 0
+    lastStory: 0
+    allData:
+      isGaralleyOpen: 0
+      isStoryTrueClear: 0
+      isTrialOpen: 0
+      isAllClear: 0
+      isAllClearCheck: 0
+  clearNewStage: 0
+  NowPlayingStage: 0
+  tmpFromEnding: 0
+--- !u!114 &5819334950364873857
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 195570}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a52853258944b5640af6f7a07da49244, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pathSaveData: 
+  saveData:
+    AppVersion: 0
+    LastLoginTime: 0
+    option:
+      bgmVolume: 0.2
+      seVolume: 1
+      languageType: 1
+      controllerPositionRate: 0.5
+      controllerSizeRate: 0.5
+      textSpeed: 0.5
+      foldAnimationSKip: 0
+      moveSpeed: 1
+    story: []
+    trial: []
+    trialPhase: 1
+    continueData:
+      stageNumber: -1
+      areaNumber: -1
+      respawnPosition: {x: 0, y: 0, z: 0}
+      isCreate: 0
+    lastStory: 0
+    allData:
+      isGaralleyOpen: 0
+      isStoryTrueClear: 0
+      isTrialOpen: 0
+      isAllClear: 0
+      isAllClearCheck: 0
+  clearNewStage: 0
+  NowPlayingStage: 0
+  tmpFromEnding: 0
