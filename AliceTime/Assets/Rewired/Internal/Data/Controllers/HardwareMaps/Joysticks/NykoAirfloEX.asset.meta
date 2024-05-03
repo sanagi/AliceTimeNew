@@ -1,22 +1,8 @@
 fileFormatVersion: 2
-guid: 0abf19c79e122564ea3bc13997aa6a0c
-labels:
-- Input
-- Joysticks
-- Controllers
-- Rewired
-- Hotplugging
-- Keyboard
-- Mouse
-- Touch
-- InputManager
-- Control
-- Gamepad
-- Controller
-- Joystick
-- Xbox360
-- XInput
-- DirectInput
-- RawInput
+guid: ba512ddde7dd21e4dac9ccfa2bf3f773
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
   userData: 
+  assetBundleName: 
+  assetBundleVariant: 

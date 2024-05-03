@@ -3,7 +3,6 @@ using System.Collections;
 using Cinemachine;
 using Cinemachine.Editor;
 using DG.Tweening;
-using Unity.VisualScripting;
 
 public class Game_Init : PhaseBase
 {

@@ -4,7 +4,6 @@ using System;
 using System.Collections;
 using Cinemachine;
 using DG.Tweening;
-using Unity.VisualScripting;
 using UnityEngine.Animations;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,10 +13,8 @@ public class CameraManager : SingletonMonoBehaviour<CameraManager> {
 	private Camera m_mainCamera;
 	private Camera m_SubCamera;
 	private Vector3 defaultPos;
-    [SerializeField]
-    private AspectOK aspectOK;
-    
-    [SerializeField]
+
+	[SerializeField]
     private CameraParam CameraParam;
 
     [SerializeField]
@@ -42,32 +39,7 @@ public class CameraManager : SingletonMonoBehaviour<CameraManager> {
 	/// </summary>
 	public void CrateMainGameGearCamera()
 	{
-		//メインカメラの設定
-		/*var cameraManager = CameraManager.Instance;
-
-		var cinemaBrain = cameraManager.MainCamera.GetComponent<CinemachineBrain>();
-		if (cinemaBrain == null)
-		{
-			cinemaBrain = cameraManager.MainCamera.AddComponent<CinemachineBrain>();
-			cinemaBrain.m_UpdateMethod = CinemachineBrain.UpdateMethod.SmartUpdate;
-			cinemaBrain.m_BlendUpdateMethod = CinemachineBrain.BrainUpdateMethod.LateUpdate;
-			cinemaBrain.m_DefaultBlend = new CinemachineBlendDefinition(CinemachineBlendDefinition.Style.EaseInOut, 2f);
-		}
-
-		//cameraManager.MainCamera.clearFlags = CameraClearFlags.SolidColor;
-		//cameraManager.MainCamera.backgroundColor = Color.black;
-
-		//VirtualCameraの親登録
-		//var rigParent = new GameObject(GameDefine.CAMERA_RIG);
-		//VirtualCameraRootTransform = rigParent.transform;
 		
-		//var virtualCamera = GameObject.Instantiate(CameraManager.Instance.CameraParam.VirtualCameraFollow);
-		//virtualCamera.transform.parent = rigParent.transform;
-		//GamePlayCamera = virtualCamera.GetComponent<GamePlayCamera>();
-		
-		//ゲームカメラ側で詳細設定
-		//GamePlayCamera.SetUpGameCamera(MainCamera, CameraParam.FovSize, CameraParam.OlthoSize, CameraParam.FollowOffset);
-		*/
 	}
 	
 	/// <summary>
@@ -75,34 +47,12 @@ public class CameraManager : SingletonMonoBehaviour<CameraManager> {
 	/// </summary>
 	public void CrateAreaSelectCamera(Vector3 cameraPos)
 	{
-		//メインカメラの設定
-		/*var cameraManager = CameraManager.Instance;
-		var mainCam = cameraManager.MainCamera;
-		
-		//LookConstraintの設定
-		var lookAt = cameraManager.MainCamera.AddComponent<LookAtConstraint>();
-		var constraintSource = new ConstraintSource();
-		constraintSource.sourceTransform = PlayerManager.Instance.CurrentPlayer.transform;
-		lookAt.AddSource(constraintSource);
-		lookAt.constraintActive = true;
-		
-		//LookConstraintの設定
-		var positionConstraint = cameraManager.MainCamera.AddComponent<PositionConstraint>();
-		var positionSource = new ConstraintSource();
-		positionSource.sourceTransform = PlayerManager.Instance.CurrentPlayer.transform;
-		positionConstraint.AddSource(positionSource);
-		positionConstraint.constraintActive = true;
-
-		mainCam.orthographic = false;
-		mainCam.fieldOfView = CameraParam.FovSize;
-		*/
-		
 		var cameraManager = CameraManager.Instance;
 
-		var cinemaBrain = cameraManager.MainCamera.GetComponent<CinemachineBrain>();
+		var cinemaBrain = cameraManager.MainCamera.gameObject.GetComponent<CinemachineBrain>();
 		if (cinemaBrain == null)
 		{
-			cinemaBrain = cameraManager.MainCamera.AddComponent<CinemachineBrain>();
+			cinemaBrain = cameraManager.MainCamera.gameObject.AddComponent<CinemachineBrain>();
 			cinemaBrain.m_UpdateMethod = CinemachineBrain.UpdateMethod.SmartUpdate;
 			cinemaBrain.m_BlendUpdateMethod = CinemachineBrain.BrainUpdateMethod.LateUpdate;
 			cinemaBrain.m_DefaultBlend = new CinemachineBlendDefinition(CinemachineBlendDefinition.Style.EaseInOut, 2f);
@@ -232,29 +182,5 @@ public class CameraManager : SingletonMonoBehaviour<CameraManager> {
 	    }
 
 	    yield return null;
-    }    
-
-	// Bloomによるフェードイン
-	public IEnumerator BloomOn() {
-
-		yield return null;
-	}
-
-	// Bloomによるフェードアウト
-	public IEnumerator BloomOff() {
-
-		yield return null;
-	}
-
-    public void AspectChange(bool _isOn)
-    {
-        if (!_isOn)
-        {
-            aspectOK.AspectChangeOff();
-        }
-        else
-        {
-            aspectOK.AspectChangeOn();
-        }
     }
 }

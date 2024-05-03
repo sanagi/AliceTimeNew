@@ -22,8 +22,7 @@ public class MainSceneManager : MonoBehaviour {
 		stateMachine.RegisterPhase(new AreaSelect());
 		stateMachine.RegisterPhase(new Explore());
 		stateMachine.RegisterPhase(new Game());
-        stateMachine.RegisterPhase(new End());
-        init = true;
+		init = true;
 	}
 
 	/// <summary>フェーズの終了時にManagerから呼ばれる</summary>
