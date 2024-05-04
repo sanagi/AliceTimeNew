@@ -7,14 +7,13 @@ using System.Collections;
 
 public class LoadManager : SingletonMonoBehaviour<LoadManager>
 {
-    public static float FADEIN_TIME = 0.2f;
-    public static float FADEOUT_TIME = 0.2f;
-
-
     [SerializeField]
     private Canvas m_loadingCanvas; // ロード画面の親Canvas
     [SerializeField]
     private Text m_loadingMessage;      // 読み込み中の文言を表示するText UI
+    
+    [SerializeField]
+    private Renderer _fadeRenderer = null;
     
     private bool isError;           // エラーが発生した場合のフラグ
     private bool m_isTransition;    // 同時に複数のシーン遷移を発生させないためのフラグ
@@ -35,7 +34,7 @@ public class LoadManager : SingletonMonoBehaviour<LoadManager>
             if (m_loadingMessage != null)
                 m_loadingMessage.gameObject.SetActive(false);
         }
-        m_loadingCanvas.worldCamera = CameraManager.Instance.SubCamera;
+        m_loadingCanvas.worldCamera = CameraManager.Instance.GetUiCamera();
         ResetState();
     }
 
@@ -110,5 +109,40 @@ public class LoadManager : SingletonMonoBehaviour<LoadManager>
         }
 
         m_isTransition = false;
+    }
+
+    // フェードアウト
+    public IEnumerator FadeOut(Action complete = null, float time = 0)
+    {
+        _fadeRenderer.gameObject.SetActive(true);
+        var fadeMat = _fadeRenderer.material;
+        float fadeSec = 0f;
+        do
+        {
+            fadeSec += Time.deltaTime;
+            fadeMat.color = new Color(0, 0, 0, Mathf.Clamp01(fadeSec));
+            yield return null;
+        } while (fadeSec < 1f);
+        
+        complete();
+        yield return null;
+    }
+
+    // フェードイン
+    public IEnumerator FadeIn(Action complete, float time = 0)
+    {
+        var fadeMat = _fadeRenderer.material;
+        float fadeSec = 1f;
+        do
+        {
+            fadeSec -= Time.deltaTime;
+            fadeMat.color = new Color(0, 0, 0, Mathf.Clamp01(fadeSec));
+            yield return null;
+        } while (fadeSec > 0f);
+        
+        _fadeRenderer.gameObject.SetActive(false);
+        
+        complete();
+        yield return null;
     }
 }

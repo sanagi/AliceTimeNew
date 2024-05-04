@@ -26,7 +26,7 @@ public class GameDisplayDialog : GameButtonBehaviour {
 
     public override void ReleaseButtonEvent ()
 	{
-		Audio_Manage.Play(SE);
+		SoundManager.Instance.PlaySound(SE);
 		dialog.SetActive (true);
 		DefaultImageSet();
 	}

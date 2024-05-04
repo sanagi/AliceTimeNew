@@ -48,7 +48,7 @@ public class TitleSelectModePanel : TitlePanelBehaviour
 
     public void Update()
     {
-#if UNITY_SWITCH
+        /*
         if (TitleUIManager.uiPlayer != null)
         {
             float yValue = TitleUIManager.uiPlayer.GetAxis(ACTION_MOVE_VERTICAL);
@@ -94,7 +94,6 @@ public class TitleSelectModePanel : TitlePanelBehaviour
                 //タイトル初めから
             }
         }
-#endif
-
+        */
     }
 }

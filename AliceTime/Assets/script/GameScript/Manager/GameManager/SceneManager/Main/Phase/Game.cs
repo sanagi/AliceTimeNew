@@ -34,8 +34,9 @@ public class Game : PhaseBase {
 	/// <summary>フェーズを出るときに呼ばれる</summary>
 	public override void OnExit (PhaseBase nextPhase)
 	{
-		Audio_Manage.eventAudioList.Clear();
-		Audio_Manage.StopLoopAllSE();
+		SoundManager.Instance.StopMusic();
+		//Audio_Manage.eventAudioList.Clear();
+		//Audio_Manage.StopLoopAllSE();
 		//Camera_Move_Dangion.Instance.Disable();
     }
 }

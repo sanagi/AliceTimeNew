@@ -69,12 +69,12 @@ public class OptionManager : SingletonMonoBehaviour<OptionManager>
 
     public void ChangeBGMVolume(float value) {
 		options.bgmVolume = value;
-		Audio_Manage.ChangeVolume_BGM(value);
+		//Audio_Manage.ChangeVolume_BGM(value);
 	}
 
 	public void ChangeSEVolume(float value) {
 		options.seVolume = value;
-		Audio_Manage.ChangeVolume_SE(value);
+		//Audio_Manage.ChangeVolume_SE(value);
 	}
 
 	public void ChangeLanguage(LanguageType languageType) {

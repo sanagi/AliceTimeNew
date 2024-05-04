@@ -50,8 +50,9 @@ public class TitleStoryModePanel : TitlePanelBehaviour
 
     public void Update()
     {
-#if UNITY_SWITCH
-        if (TitleUIManager.uiPlayer != null)
+        /*
+         * ボタンで選ぶ
+                 if (TitleUIManager.uiPlayer != null)
         {
             float yValue = TitleUIManager.uiPlayer.GetAxis(ACTION_MOVE_VERTICAL);
             if (yValue > BORDER && !selectedMove)
@@ -100,6 +101,6 @@ public class TitleStoryModePanel : TitlePanelBehaviour
                 backButton.GotoNextPhase();
             }
         }
-#endif
+         */
     }
 }

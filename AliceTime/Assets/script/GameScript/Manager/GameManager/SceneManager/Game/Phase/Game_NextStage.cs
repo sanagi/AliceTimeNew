@@ -11,7 +11,7 @@ public class Game_NextStage : PhaseBase {
 
 	public override void OnEnter (PhaseBase prevPhase)
 	{
-		CameraManager.Instance.StartCoroutine(CameraManager.Instance.FadeOut(() => {
+		LoadManager.Instance.StartCoroutine(LoadManager.Instance.FadeOut(() => {
 			GearStageManager.Instance.ResetStage();			
 
 			GameObject Player = GameObject.Find(GameDefine.PLAYER);

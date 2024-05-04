@@ -17,19 +17,7 @@ public class Title_Init : PhaseBase {
         player.controllers.maps.SetMapsEnabled(true, GameDefine.CATEGORY_SYSTEM);
 
         //TouchEffectManger.Instance.dragEffect = false;
-        // 起動時とEndから帰って来た時はスタート画面へ遷移する
-        var currentPhase = MainSceneManager.CurrentPhase;
-		if (currentPhase == null || ((Title)currentPhase).PrePhaseName == "" || SaveManager.Instance.tmpFromEnding) {
-			TitleManager.Instance.wait = true;
-		} 
-		else {
-            TitleManager.Instance.BackGround.SetActive(true);
-
-            Audio_Manage.Play(SoundEnum.BGM_TITLE);
-			TitleSceneManager.Goto("Title_SelectMode");
-            TitleManager.Instance.init = true;
-		}
-        //CameraManager.Instance.AspectChange(true);
+        TitleManager.Instance.wait = true;
 	}
 
 	public override void OnExit (PhaseBase nextPhase)

@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 
+#if UNITY_EDITOR
 public class DebugManager : MonoBehaviour{
 	/*public class DebugScene
 	{
@@ -72,6 +73,36 @@ public class DebugManager : MonoBehaviour{
 	public void SetAreaName(string areaName)
 	{
 		_displayAreaNameText.text = areaName;
+	}
+
+	public void Update()
+	{
+		//デバッグ機能
+		if (Input.GetKeyDown(KeyCode.Escape))
+		{
+			//一時停止を呼ぶ
+			Debug.LogError("[BREAK]");
+		}
+		else
+		if (Input.GetKey(KeyCode.Tab))
+		{
+			Time.timeScale = 0f;
+		}
+		else
+		if (Input.GetKey(KeyCode.LeftShift))
+		{
+			Time.timeScale = 0.2f;
+		}
+		else
+		if (Input.GetKey(KeyCode.LeftControl))
+		{
+			Time.timeScale = 4f;
+		}
+		else
+		{
+			//通常の再生
+			Time.timeScale = 1;
+		}
 	}
 	
 	/*
@@ -418,3 +449,4 @@ public class DebugManager : MonoBehaviour{
     }
     */
 }
+#endif

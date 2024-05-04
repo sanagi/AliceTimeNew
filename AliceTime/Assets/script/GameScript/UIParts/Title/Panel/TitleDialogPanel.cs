@@ -48,7 +48,7 @@ public class TitleDialogPanel : TitlePanelBehaviour
 
     public void Update()
     {
-#if UNITY_SWITCH
+        /*ボタン操作
         float xValue = TitleUIManager.uiPlayer.GetAxis(ACTION_MOVE_HORIZONTAL);
         if (xValue > BORDER && !selectedMove)
         {
@@ -94,6 +94,6 @@ public class TitleDialogPanel : TitlePanelBehaviour
                 backButton.GotoNextPhase();
             }
         }
-#endif
+        */
     }
 }

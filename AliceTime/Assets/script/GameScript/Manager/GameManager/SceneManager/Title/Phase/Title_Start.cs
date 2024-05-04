@@ -31,10 +31,10 @@ public class Title_Start : PhaseBase {
         panel = objPanel.GetComponent<TitleStartPanel>();
         panel.Enable();
 
-        CameraManager.Instance.StartCoroutine(CameraManager.Instance.FadeIn(() =>
+        LoadManager.Instance.StartCoroutine(LoadManager.Instance.FadeIn(() =>
         {
             // BGM再生
-            Audio_Manage.Play(SoundEnum.BGM_TITLE);
+            SoundManager.Instance.PlayMusic(MusicId.Title);
         }));
     }
 

@@ -42,6 +42,6 @@ public class Explore : PhaseBase {
 	/// <summary>フェーズを出るときに呼ばれる</summary>
 	public override void OnExit (PhaseBase nextPhase)
 	{
-        Audio_Manage.StopBGM();
+        SoundManager.Instance.StopMusic();
     }
 }

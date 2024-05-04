@@ -44,13 +44,10 @@ public class TitleManager : MonoBehaviour {
         wait = false;
 
         // Check MainManager
-        var applicationManager = (ApplicationManager)FindObjectOfType<ApplicationManager>();
-		if (applicationManager == null) {
-            applicationManager = (new GameObject (GameDefine.MAIN_MANAGER)).AddComponent<ApplicationManager> ();
-		}
+        var applicationManager = SystemManager.Instance;
 
 		// Wait Init MainManager
-		while (!applicationManager.isInitialization) {
+		while (!applicationManager.IsInitialized) {
 			yield return null;
 		}
 

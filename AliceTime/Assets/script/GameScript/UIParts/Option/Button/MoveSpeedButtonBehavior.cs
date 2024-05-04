@@ -8,7 +8,7 @@ public class MoveSpeedButtonBehavior : OptionButtonBehaviour
     {
         if(moveSpeed != OptionManager.Instance.GetMoveSpeed())
         {
-            Audio_Manage.Play(SoundEnum.SE_OK);
+            SoundManager.Instance.PlaySound(SoundId.System_Decide);
         }
         OptionManager.Instance.ChangeMoveSpeed(moveSpeed);
 

@@ -6,7 +6,7 @@ public class AreaSelectButtonBehaviour : MonoBehaviour, IButtonEvent
     public MAINSCENE TargetSceneManager = MAINSCENE.AREASELECT;
     public AREASELECT AreaSelect_NextPhaseName = AREASELECT.INIT;
 
-    public SoundEnum SE = SoundEnum.SE_STAGESELECT;
+    public SoundId SE = SoundId.System_Decide;
 
     public bool isSelectedActive = false;
     public const string SUBMIT = "UISubmit";
@@ -27,7 +27,7 @@ public class AreaSelectButtonBehaviour : MonoBehaviour, IButtonEvent
 
     public void GotoNextPhase()
     {
-        Audio_Manage.Play(SE);
+        SoundManager.Instance.PlaySound(SE);
 
         var continueData = SaveManager.Instance.Read_ContinueData();
         if (TargetSceneManager == MAINSCENE.AREASELECT)
@@ -56,18 +56,16 @@ public class AreaSelectButtonBehaviour : MonoBehaviour, IButtonEvent
         }
         else if (TargetSceneManager == MAINSCENE.TITLE)
         {
-            Audio_Manage.Play(SE);
             AreaSelectUIManager.HidePanel(AREASELECT.PAUSE);
-            CameraManager.Instance.StartCoroutine(CameraManager.Instance.FadeOut(() =>
+            LoadManager.Instance.StartCoroutine(LoadManager.Instance.FadeOut(() =>
             {
                 MainSceneManager.Goto(GameDefine.TITLE);
             }));
         }
         else if (TargetSceneManager == MAINSCENE.AREASELECT)
         {
-            Audio_Manage.Play(SE);
             AreaSelectUIManager.HidePanel(AREASELECT.PAUSE);
-            CameraManager.Instance.StartCoroutine(CameraManager.Instance.FadeOut(() =>
+            LoadManager.Instance.StartCoroutine(LoadManager.Instance.FadeOut(() =>
             {
                 continueData.ResetStageData();
                 SaveManager.Instance.clearNewStage = false;

@@ -31,7 +31,15 @@ public abstract class SingletonMonoBehaviour<T> : SingletonSubMonobehaviour wher
         Destroy(gameObject);
     }
 
-    protected virtual void Start() { }
+    protected virtual void Start()
+    {
+        Initialize();
+    }
+
+    protected virtual void Initialize()
+    {
+        
+    }
 
     protected virtual void OnEnable()
     {

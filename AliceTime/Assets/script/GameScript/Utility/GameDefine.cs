@@ -27,9 +27,10 @@ public static class GameDefine
     public static string AUDIO_MANAGER = "AudioManager";
     public static string EFFECT_MANAGER = "EffectManager";
     public static string PREFAB_MANAGER = "PrefabPoolManager";
+    public static string CAMERA_MANAGER = "CameraManager";
     public static string MAIN_MANAGER = "PrefabPoolManager";    
     public static string TITLE_UI_MANAGER = "TitleUIManager";    
-
+    public static string LOAD_MANAGER = "LoadManager";
 
     #endregion
 
@@ -64,18 +65,12 @@ public static class GameDefine
     #region Game
     public const string ACTION_MOVE_HORIZONTAL = "ACTION_MOVE_HORIZONTAL";
     public const string ACTION_MOVE_VERTICAL = "ACTION_MOVE_VERTICAL";
-    public const string ACTION_JUMP = "Jump";
+    public const string ACTION_JUMP = "JUMP";
     public const string ACTION_MOVE_KEYPOINT_HORIZONTAL = "ACTION_MOVE_HORIZONTAL_KEYPOINT";
     public const string ACTION_MOVE_KEYPOINT_VERTICAL = "ACTION_MOVE_VERTICAL_KEYPOINT0";
-    public const string ACTION_MAGIC = "PAST_MAGIC";
-    public const string ACTION_MAGIC_CANCEL = "PAST_MAGIC_CANCEL";
-    public const string ACTION_MAGIC_CHANGE = "PAST_MAGIC_CHANGE";
-    public const string RIGHT_ROTATE= "ROTATE_RIGHT";
-    public const string LEFT_ROTATE = "ROTATE_LEFT";
-    
-    public const string ACTION_REWIND = "REWIND";
+    public const string RIGHT_ROTATE= "ROTATE_GEAR_Right";
+    public const string LEFT_ROTATE = "ROTATE_GEAR_Left";
 
-    public const string ACTION_BACKGROUND_HORIZONTAL = "BACKGROUND_MOVE_HORIZONTAL";
     #endregion
 
     /// <summary>

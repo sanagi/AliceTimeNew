@@ -35,12 +35,12 @@ public class AreaSelect_Init : PhaseBase
             PlayerManager.Instance.DisableControllable();
 
             //フェードインしてゲーム開始
-            CameraManager.Instance.StartCoroutine(CameraManager.Instance.FadeIn(() =>
+            LoadManager.Instance.StartCoroutine(LoadManager.Instance.FadeIn(() =>
             {
                 // BGM
                 
                 //カメラの初期設定
-                CameraManager.Instance.CrateAreaSelectCamera(floorParam.Camera_InitPos);
+                //CameraManager.Instance.CrateAreaSelectCamera(floorParam.Camera_InitPos);
 
                 SaveManager.Instance.NowPlayingStage = Int32.Parse(floorId);
 

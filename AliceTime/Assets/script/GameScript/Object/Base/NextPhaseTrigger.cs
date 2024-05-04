@@ -26,7 +26,8 @@ public class NextPhaseTrigger : MonoBehaviour
     private Canvas _displayUICanvas;
     void Start()
     {
-        _displayUICanvas.worldCamera = CameraManager.Instance.MainCamera;
+        //シーンにある3Dカメラを設定
+        //_displayUICanvas.worldCamera = CameraManager.Instance.MainCamera;
         _displayText.text = displayNextId;
         
         // foward(z軸)の方を向けることで文字が反転するのを修正

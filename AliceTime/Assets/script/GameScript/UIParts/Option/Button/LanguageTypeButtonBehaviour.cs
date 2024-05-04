@@ -42,11 +42,11 @@ public class LanguageTypeButtonBehaviour : OptionButtonBehaviour
         {
             //言語設定を変えて再起動
             OptionManager.Instance.ChangeLanguage(language);
-            Audio_Manage.Play(SoundEnum.SE_STAGESELECT);
-            CameraManager.Instance.StartCoroutine(CameraManager.Instance.FadeOut(() =>
+            SoundManager.Instance.PlaySound(SoundId.System_Decide);
+            LoadManager.Instance.StartCoroutine(LoadManager.Instance.FadeOut(() =>
             {
-                Audio_Manage.StopBGM();
-                MainSceneManager.Goto("Title");
+                SoundManager.Instance.StopMusic();
+                MainSceneManager.Goto(GameDefine.TITLE);
             }));
         }
 	}

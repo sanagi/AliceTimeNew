@@ -148,25 +148,6 @@ public class KeyPointController : MonoBehaviour
         info.deltaTime = Time.deltaTime;
         info.Id = -1;
 
-        if (_aliceInputManager.PastMagicHold.CurrentValue)
-        {
-            info.currentScreenPosition = Camera.main.WorldToScreenPoint(simulatePos);
-            info.Phase = InputPhase.Began;
-            touches.Add(info);
-        }
-        else if (_aliceInputManager.PastMagic.CurrentValue)
-        {
-            info.currentScreenPosition = Camera.main.WorldToScreenPoint(simulatePos);
-            info.Phase = InputPhase.Ended;
-            touches.Add(info);
-        }
-        else if (_aliceInputManager.PastMagicFire.CurrentValue)
-        {
-            info.currentScreenPosition = Camera.main.WorldToScreenPoint(simulatePos);
-            info.Phase = InputPhase.Stay;
-            touches.Add(info);
-        }
-
         TouchInputManager.Instance.HandlerManager.FireEvent(touches);
     }
 
@@ -200,7 +181,7 @@ public class KeyPointController : MonoBehaviour
     }
     
     private void ContollerMove()
-    {
+    {/*
         if (!KeyPointManager.isControllable)
         {
             return;
@@ -228,6 +209,7 @@ public class KeyPointController : MonoBehaviour
             }
             InScreen(); //補正
         }
+        */
     }
 
     private void ControllerTurn()
@@ -367,6 +349,7 @@ public class KeyPointController : MonoBehaviour
     /// </summary>
     private void CheckPastMagiclCircle()
     {
+        /*
         //長押しでゴースト作る(既に作ってたらポインタに沿って移動)
         _aliceInputManager.PastMagic.Where(x=>x)
             .SelectMany(x => Observable.Interval(TimeSpan.FromSeconds(GameDefine.LONG_PRESS_SECONDS)))
@@ -408,6 +391,7 @@ public class KeyPointController : MonoBehaviour
                 _pastMagicalCreator.DestroyPastMagicalCircleGhost();
                 isCreatedGhost = false;
             });
+            */
     }
 
     /// <summary>

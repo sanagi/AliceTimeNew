@@ -15,7 +15,7 @@ public class AreaSelect_NextStage : PhaseBase {
 		
 		((AreaSelect)MainSceneManager.CurrentPhase).SelectedID = AreaSelectSceneManager.NextID;
 		
-		CameraManager.Instance.StartCoroutine(CameraManager.Instance.FadeOut(() =>
+		LoadManager.Instance.StartCoroutine(LoadManager.Instance.FadeOut(() =>
 		{
 			Scene3DStageManager.Instance.ResetStage();			
 

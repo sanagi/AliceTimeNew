@@ -44,12 +44,12 @@ public class Explore_Init : PhaseBase
             PlayerManager.Instance.DisableControllable();
 
             //フェードインしてゲーム開始
-            CameraManager.Instance.StartCoroutine(CameraManager.Instance.FadeIn(() =>
+            LoadManager.Instance.StartCoroutine(LoadManager.Instance.FadeIn(() =>
             {
                 // BGM
                 
                 //カメラの初期設定
-                CameraManager.Instance.CrateAreaSelectCamera(stageParam.Camera_InitPos);
+                //CameraManager.Instance.CrateAreaSelectCamera(stageParam.Camera_InitPos);
 
                 //SaveManager.Instance.NowPlayingStage = int.Parse(floorId);
 

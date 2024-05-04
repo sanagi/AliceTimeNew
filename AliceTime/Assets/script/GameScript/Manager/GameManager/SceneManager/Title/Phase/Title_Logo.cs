@@ -42,7 +42,7 @@ public class Title_Logo : PhaseBase
 
 		    ShowLogo(firstPanel, () =>
 		    {
-			    CameraManager.Instance.StartCoroutine(CameraManager.Instance.FadeIn(() =>
+			    LoadManager.Instance.StartCoroutine(LoadManager.Instance.FadeIn(() =>
 			    {
 				    UIAnimationUtil.Wait(1f, () =>
 				    {
@@ -50,7 +50,7 @@ public class Title_Logo : PhaseBase
 					    {
 						    UIAnimationUtil.Wait(0.2f, () =>
 						    {
-                                CameraManager.Instance.StartCoroutine(CameraManager.Instance.FadeOut(() => {
+							    LoadManager.Instance.StartCoroutine(LoadManager.Instance.FadeOut(() => {
                                     //TouchEffectManger.Instance.dragEffect = true;
                                     TitleManager.Instance.BackGround.SetActive(true);
                                     TitleSceneManager.Goto(GameDefine.TITLE_START);

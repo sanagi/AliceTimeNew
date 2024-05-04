@@ -305,7 +305,7 @@ public abstract class PlayerController : MonoBehaviour, IKeyEventHandler
         if (isGrounded && groundSECheck && !IsGimickLadderNow && currentState != STATE.JUMP)
         {
             //着地音
-            Audio_Manage.Play(SoundEnum.SE_JumpDown);
+            //SoundManager.Instance.PlaySound(SoundEnum.SE_JumpDown);
         }
 
         if (hijackAnim != null && hijackMove != null)
@@ -713,7 +713,7 @@ public abstract class PlayerController : MonoBehaviour, IKeyEventHandler
         isJump = true;
         SetGravity(0f);
         SetState(STATE.JUMP);
-        Audio_Manage.Play(SoundEnum.SE_JumpUp);
+        //Audio_Manage.Play(SoundEnum.SE_JumpUp);
     }
 
     public void JumpEnd()

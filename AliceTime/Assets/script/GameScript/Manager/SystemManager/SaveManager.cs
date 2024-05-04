@@ -72,17 +72,9 @@ public class SaveManager : SingletonMonoBehaviour<SaveManager>
 			controllerSizeRate = 0.5f;
 			textSpeed = 0.5f;
 			foldAnimationSKip = OptionManager.FoldAnimationSkip.OFF;
-            moveSpeed = OptionManager.MoveSpeed.Quick;
-			//TODO:Awakeかスタートで呼ばないとまずいらしい？
-            if (Application.systemLanguage == SystemLanguage.Japanese)
-            {
-                languageType = OptionManager.LanguageType.Japanese;
-            }
-            else
-            {
-                languageType = OptionManager.LanguageType.English;
-            }
-		}
+            moveSpeed = OptionManager.MoveSpeed.Quick; 
+            languageType = OptionManager.LanguageType.Japanese;
+        }
 	}
 
 	/// ストーリー用データ
@@ -211,22 +203,6 @@ public class SaveManager : SingletonMonoBehaviour<SaveManager>
 	public int NowPlayingStage;
     public bool tmpFromEnding;
 
-#if UNITY_SWITCH
-    private const string mountName = "save";
-    private const string fileName = "SaveData";
-    private nn.fs.FileHandle fileHandle = new nn.fs.FileHandle();
-
-    private nn.hid.NpadState npadState;
-    private nn.hid.NpadId[] npadIds = { nn.hid.NpadId.Handheld, nn.hid.NpadId.No1 };
-    private const int saveDataVersion = 1;
-    //TODO:自動計算
-    private const int saveDataSize = 1024;
-    private int counter = 0;
-    private int saveData_ = 0;
-    private int loadData_ = 0;
-
-#endif
-
     protected override void Init() {
 		base.Init();
 
@@ -234,82 +210,22 @@ public class SaveManager : SingletonMonoBehaviour<SaveManager>
         packer = new ObjectPacker();
         tmpFromEnding = false;
         pathSaveData = "";
-
-#if UNITY_SWITCH
-        //アカウント周りの初期化とハンドルの取得
-        Account.Initialize();
-        UserHandle userHandle = new UserHandle();
-        if (!Account.TryOpenPreselectedUser(ref userHandle))
-	    {
-		    Debug.Log("OpenPreselectedUser is failed");
-		    Account.CloseUser(userHandle);
-	    }
-        //セーブデータのマウント
-        Uid user = new Uid();
-        Account.GetUserId(ref user, userHandle).abortUnlessSuccess();
-        nn.fs.SaveData.Mount(mountName, user).abortUnlessSuccess();
         
-        pathSaveData = string.Format("{0}:/{1}", mountName, fileName); 
-        /*
-        nn.hid.Npad.Initialize();
-        nn.hid.Npad.SetSupportedStyleSet(nn.hid.NpadStyle.Handheld | nn.hid.NpadStyle.JoyDual);
-        nn.hid.Npad.SetSupportedIdType(npadIds);
-        npadState = new nn.hid.NpadState();
-        */
-#else
         pathSaveData = Application.persistentDataPath + "/storage/SAVEDATA";
-#endif
-	    
-	    Read();
+
+        Read();
         gameObject.AddComponent<OptionManager>();
     }
 
     protected override void OnDestroy()
     {
-#if UNITY_SWITCH
-        nn.fs.FileSystem.Unmount(mountName);
-#endif
+	    
     }
 
     /// セーブデータの読み込み
     private void Read()
 	{
-#if UNITY_SWITCH
-        nn.fs.EntryType entryType = 0;
-        nn.Result result = nn.fs.FileSystem.GetEntryType(ref entryType, pathSaveData);
-        if (nn.fs.FileSystem.ResultPathNotFound.Includes(result)) {
-
-            saveData = new SaveData();
-            Write();
-
-            return;
-        }
-        result.abortUnlessSuccess();
-
-        result = nn.fs.File.Open(ref fileHandle, pathSaveData, nn.fs.OpenFileMode.Read);
-        result.abortUnlessSuccess();
-
-        long fileSize = 0;
-        result = nn.fs.File.GetSize(ref fileSize, fileHandle);
-        result.abortUnlessSuccess();
-
-        byte[] data = new byte[fileSize];
-        result = nn.fs.File.Read(fileHandle, 0, data, fileSize);
-        result.abortUnlessSuccess();
-
-        nn.fs.File.Close(fileHandle);
-
-        using (MemoryStream stream = new MemoryStream(data))
-        {
-            BinaryReader reader = new BinaryReader(stream);
-            //int version = reader.ReadInt32();
-            //Debug.Assert(version == saveDataVersion); // Save data version up
-
-            //var Dec_Loaded_Data = Decrypt(reader.ReadBytes((int)fileSize));
-            saveData = packer.Unpack<SaveData>(reader.ReadBytes((int)fileSize));
-        }
-#else
-        // 対象のディレクトリが存在しない時
+		// 対象のディレクトリが存在しない時
         if (!Directory.Exists (Directory.GetParent(pathSaveData).FullName)) {
 			Directory.CreateDirectory (Directory.GetParent(pathSaveData).FullName);
 #if UNITY_EDITOR
@@ -337,54 +253,12 @@ public class SaveManager : SingletonMonoBehaviour<SaveManager>
 
 		var Dec_Loaded_Data = Decrypt (Loaded_Data);
 		saveData = packer.Unpack<SaveData>(Dec_Loaded_Data);
-#endif
-
-    }
+	}
 
     /// セーブデータの書き込み
     private void Write()
 	{
-#if UNITY_SWITCH
-        var Saved_Data = packer.Pack(saveData); //シリアライズ
-        //var Enc_Saved_Data = Encrypt(Saved_Data);
-
-        byte[] data;
-        using (MemoryStream stream = new MemoryStream(saveDataSize))
-        {
-            BinaryWriter writer = new BinaryWriter(stream);
-            //writer.Write(saveDataVersion);
-            writer.Write(Saved_Data);
-            stream.Close();
-            data = stream.GetBuffer();
-            Debug.Assert(data.Length == saveDataSize);
-        }
-
-        // Nintendo Switch Guideline 0080
-        UnityEngine.Switch.Notification.EnterExitRequestHandlingSection();
-
-        nn.Result result = nn.fs.File.Delete(pathSaveData);
-        if (!nn.fs.FileSystem.ResultPathNotFound.Includes(result))
-        {
-            result.abortUnlessSuccess();
-        }
-
-        result = nn.fs.File.Create(pathSaveData, saveDataSize);
-        result.abortUnlessSuccess();
-        
-        result = nn.fs.File.Open(ref fileHandle, pathSaveData, nn.fs.OpenFileMode.Write);
-        result.abortUnlessSuccess();
-
-        result = nn.fs.File.Write(fileHandle, 0, data, data.LongLength, nn.fs.WriteOption.Flush);
-        result.abortUnlessSuccess();
-
-        nn.fs.File.Close(fileHandle);
-        result = nn.fs.FileSystem.Commit(mountName);
-        result.abortUnlessSuccess();
-
-        // Nintendo Switch Guideline 0080
-        UnityEngine.Switch.Notification.LeaveExitRequestHandlingSection();
-#else
-        // 対象のディレクトリが存在しない時
+		// 対象のディレクトリが存在しない時
         if (!Directory.Exists (Directory.GetParent(pathSaveData).FullName)) {
 			Directory.CreateDirectory (Directory.GetParent(pathSaveData).FullName);
 		}
@@ -397,7 +271,6 @@ public class SaveManager : SingletonMonoBehaviour<SaveManager>
         var Saved_Data = packer.Pack (saveData); //シリアライズ
 		var Enc_Saved_Data = Encrypt(Saved_Data);
 		File.WriteAllBytes(pathSaveData, Enc_Saved_Data);
-#endif
 	}
 
 #region ストーリー関連

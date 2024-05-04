@@ -2,6 +2,9 @@
 using System.Collections;
 using KamioriInput;
 
+/// <summary>
+/// タッチ操作まで巻き取るかどうか(一旦気にしなくていいかも)
+/// </summary>
 public abstract class UIManager : MonoBehaviour, IKeyEventHandler, ITouchEventHandler {
     public abstract void DoCrossKeyEvent (KeyInfo info);
 	public abstract void DoJumpKey (KeyInfo info);

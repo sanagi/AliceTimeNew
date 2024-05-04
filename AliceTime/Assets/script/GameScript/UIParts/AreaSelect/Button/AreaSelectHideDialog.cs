@@ -23,7 +23,7 @@ public class AreaSelectHideDialog : MonoBehaviour, IButtonEvent {
 	public void ReleaseButtonEvent ()
 	{
 		dialog.SetActive (false);
-		Audio_Manage.Play(SoundEnum.SE_CANCEL);
+		SoundManager.Instance.PlaySound(SoundId.System_Cancel);
 		/*switch(dialog.name){
 		case "Go_TitleDialog":
 			

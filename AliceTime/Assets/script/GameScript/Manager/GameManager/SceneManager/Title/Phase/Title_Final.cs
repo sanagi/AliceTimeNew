@@ -10,7 +10,7 @@ public class Title_Final : PhaseBase {
 
 	public override void OnEnter (PhaseBase prevPhase)
 	{
-		Audio_Manage.StopBGM ();
+		SoundManager.Instance.StopMusic();
 	}
 
 	public override void OnExit (PhaseBase nextPhase)

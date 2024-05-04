@@ -15,7 +15,7 @@ public class Title : PhaseBase {
 
 	public override void OnEnter (PhaseBase prevPhase)
 	{
-		CameraManager.Instance.ResetPosition();
+		//CameraManager.Instance.ResetPosition();
 		DebugManager.Instance.SetAreaName("");
 
         PrePhaseName = prevPhase == null ? "" : prevPhase.PhaseName;

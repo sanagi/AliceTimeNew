@@ -18,7 +18,7 @@ public class TitleButtonBehaviour : MonoBehaviour, IButtonEvent
     public int Stage = 0;
     public int Area = 0;
 
-    public SoundEnum SE = SoundEnum.SE_STAGESELECT;
+    public SoundId SE = SoundId.System_Decide;
 
     public Image buttonImage;
     public Text buttonText;
@@ -65,14 +65,14 @@ public class TitleButtonBehaviour : MonoBehaviour, IButtonEvent
     
     public void Update()
     {
-        if(TitleUIManager.uiPlayer != null)
+        if(TitleUIManager.UiPlayer != null)
         {
             if (!TitleUIManager.IsContorollable)
             {
                 return;
             }
-            //トライアルあけるときは操作できないように
-            if ((TitleSceneManager.CurrentPhase.GetType() == typeof(Title_Start) && (TitleUIManager.uiPlayer.GetButtonUp(PLUS)) || TitleUIManager.uiPlayer.GetButtonUp(SUBMIT)) && isSelectedActive)
+            //特定の動作のときは操作できないように
+            if ((TitleSceneManager.CurrentPhase.GetType() == typeof(Title_Start) && (TitleUIManager.UiPlayer.GetButtonUp(PLUS)) || TitleUIManager.UiPlayer.GetButtonUp(SUBMIT)) && isSelectedActive)
             {
                 GotoNextPhase();
                 isSelectedActive = false;
@@ -93,7 +93,6 @@ public class TitleButtonBehaviour : MonoBehaviour, IButtonEvent
             }
             else
             {
-                //iTween.ScaleTo(this.gameObject, iTween.Hash("x", 1.0f, "y", 1.0f, "easeType", "time", time, "easeOutQuart"));
             }
         }
     }
@@ -101,7 +100,7 @@ public class TitleButtonBehaviour : MonoBehaviour, IButtonEvent
     // ボタンのイベント処理
     public void GotoNextPhase()
     {
-        Audio_Manage.Play(SE);
+        SoundManager.Instance.PlaySound(SE);
         if (TargetSceneManager == MAINSCENE.TITLE)
         {
             switch (Title_NextPhaseName)
@@ -152,13 +151,13 @@ public class TitleButtonBehaviour : MonoBehaviour, IButtonEvent
                     SaveManager.Instance.Story_Hajime();
                 }
             }
-            CameraManager.Instance.StartCoroutine(CameraManager.Instance.FadeOut(() =>
-                {
-                    //マップ選択シーンへ遷移
-                    MainSceneManager.Goto(GameDefine.AreaSelect);
-                    //プロローグみたいなイベントが入るならイベントシーン遷移かも
-                    //MainSceneManager.Goto(GameDefine.GAME);
-                }));
+            LoadManager.Instance.StartCoroutine(LoadManager.Instance.FadeOut(() =>
+            {
+                //マップ選択シーンへ遷移
+                MainSceneManager.Goto(GameDefine.AreaSelect);
+                //プロローグみたいなイベントが入るならイベントシーン遷移かも
+                //MainSceneManager.Goto(GameDefine.GAME);
+            }));
         }
         /*else if (TargetSceneManager == MAINSCENE.AREASELECT)
         { // つづきからボタン

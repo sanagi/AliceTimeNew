@@ -29,7 +29,7 @@ public class Game_Init : PhaseBase
         ReadAudio();
         
         //カメラ設定
-        CameraManager.Instance.CrateMainGameGearCamera();
+        //CameraManager.Instance.CrateMainGameGearCamera();
 
         //AibouManager.MoveToPosition(GameManager.RespawnPosition + Vector3.up, 0);
         //Camera_Move_Dangion.Instance.PlayerSet();
@@ -44,7 +44,7 @@ public class Game_Init : PhaseBase
         MainGameManager.SetPlayStage(GameDefine.DEBUG_STAGE);
         
         //フェードインしてゲーム開始
-        CameraManager.Instance.StartCoroutine(CameraManager.Instance.FadeIn(() =>
+        LoadManager.Instance.StartCoroutine(LoadManager.Instance.FadeIn(() =>
         {
             //SaveManager.Instance.NowPlayingStage = GameManager.StageID;
             
