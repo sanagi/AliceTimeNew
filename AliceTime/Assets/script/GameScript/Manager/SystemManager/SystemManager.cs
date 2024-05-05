@@ -44,6 +44,8 @@ public class SystemManager : SingletonMonoBehaviour<SystemManager>
     private AliceInputManager _aliceInputManager;
     [SerializeField]
     private LoadManager _loadManager;
+    [SerializeField]
+    private FadeManager _fadeManager;    
 
     public bool IsInitialized = false;
 
@@ -120,6 +122,10 @@ public class SystemManager : SingletonMonoBehaviour<SystemManager>
         {
             _loadManager = (new GameObject(GameDefine.LOAD_MANAGER)).AddComponent<LoadManager>();
         }
+        if (_fadeManager == null)
+        {
+            _fadeManager = (new GameObject(GameDefine.FADE_MANAGER)).AddComponent<FadeManager>();
+        }        
         
         //stateMachineの登録
         _sceneManager.Initialization();
@@ -146,11 +152,9 @@ public class SystemManager : SingletonMonoBehaviour<SystemManager>
         //初期化
         InitializeApplication();
         
-        //デバッグシーンからの起動でなければタイトルシーンへの遷移
-        LoadManager.Instance.StartCoroutine(LoadManager.Instance.FadeOut(() =>
-        {
-            MainSceneManager.Goto(GameDefine.TITLE);
-        }));
+        //タイトルシーンへの遷移
+        MainSceneManager.Goto(GameDefine.TITLE);
+
     }
     /// <summary>
     /// オブジェクト破棄時

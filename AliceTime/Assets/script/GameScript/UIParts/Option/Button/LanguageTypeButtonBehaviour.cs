@@ -43,7 +43,7 @@ public class LanguageTypeButtonBehaviour : OptionButtonBehaviour
             //言語設定を変えて再起動
             OptionManager.Instance.ChangeLanguage(language);
             SoundManager.Instance.PlaySound(SoundId.System_Decide);
-            LoadManager.Instance.StartCoroutine(LoadManager.Instance.FadeOut(() =>
+            FadeManager.Instance.StartCoroutine(FadeManager.Instance.FadeOut(() =>
             {
                 SoundManager.Instance.StopMusic();
                 MainSceneManager.Goto(GameDefine.TITLE);

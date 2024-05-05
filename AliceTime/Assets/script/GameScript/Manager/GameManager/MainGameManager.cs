@@ -27,6 +27,9 @@ public class MainGameManager : MonoBehaviour
     /// </summary>
     public static Vector3 RespawnPosition;
 
+    [SerializeField]
+    private Canvas _gameCanvas;
+
     public static void UpdateRespawnPosition(Vector3 pos)
     {
         RespawnPosition.x = pos.x;
@@ -68,7 +71,7 @@ public class MainGameManager : MonoBehaviour
         }
 
         sceneManager.Initialization();
-        uiManager.Initialization();
+        uiManager.Initialization(_gameCanvas);
 
         GameSceneManager.Goto(GameDefine.GAME_INIT);
     }

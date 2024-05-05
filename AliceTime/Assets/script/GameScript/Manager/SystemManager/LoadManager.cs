@@ -8,15 +8,16 @@ using System.Collections;
 public class LoadManager : SingletonMonoBehaviour<LoadManager>
 {
     [SerializeField]
-    private Canvas m_loadingCanvas; // ロード画面の親Canvas
-    [SerializeField]
-    private Text m_loadingMessage;      // 読み込み中の文言を表示するText UI
+    private Canvas _loadingCanvas; // ロード画面の親Canvas
+
+    [SerializeField] 
+    private GameObject _loadPanel;//読み込み中を出すパネル
     
     [SerializeField]
-    private Renderer _fadeRenderer = null;
-    
+    private Text _loadingMessage;      // 読み込み中の文言を表示するText UI
+
     private bool isError;           // エラーが発生した場合のフラグ
-    private bool m_isTransition;    // 同時に複数のシーン遷移を発生させないためのフラグ
+    private bool _isTransition;    // 同時に複数のシーン遷移を発生させないためのフラグ
 
     /// <summary>
     /// 初期化処理
@@ -25,16 +26,16 @@ public class LoadManager : SingletonMonoBehaviour<LoadManager>
     protected override void Init() {
         DontDestroyOnLoad(gameObject);
 
-        if (m_loadingCanvas == null || m_loadingMessage == null) {
+        if (_loadingCanvas == null || _loadingMessage == null) {
             Debug.LogError("ロード画面の表示に必要なUIが揃っていません");
 
             isError = true;
-            if (m_loadingCanvas != null)
-                m_loadingCanvas.gameObject.SetActive(false);
-            if (m_loadingMessage != null)
-                m_loadingMessage.gameObject.SetActive(false);
+            if (_loadingCanvas != null)
+                _loadingCanvas.gameObject.SetActive(false);
+            if (_loadingMessage != null)
+                _loadingMessage.gameObject.SetActive(false);
         }
-        m_loadingCanvas.worldCamera = CameraManager.Instance.GetUiCamera();
+        _loadingCanvas.worldCamera = CameraManager.Instance.GetUiCamera();
         ResetState();
     }
 
@@ -42,7 +43,7 @@ public class LoadManager : SingletonMonoBehaviour<LoadManager>
     /// 内部ステータスをリセット
     /// </summary>
     private void ResetState() {
-        m_isTransition = false;
+        _isTransition = false;
 
         if (isError) return;
 
@@ -50,20 +51,20 @@ public class LoadManager : SingletonMonoBehaviour<LoadManager>
     }
 
     /// <summary>
-    /// ロード画面を表示
+    /// ロードパネルを表示
     /// </summary>
 	public void ShowLoadingMessage() {
         if (isError) return;
 
-        m_loadingCanvas.gameObject.SetActive(true);
+        _loadPanel.gameObject.SetActive(true);
     }
 
     /// <summary>
-    /// ロード画面を非表示に
+    /// ロードパネルを非表示に
     /// </summary>
 	public void HideLoadingMessage() {
         if (isError) return;
-		m_loadingCanvas.gameObject.SetActive(false);
+        _loadPanel.gameObject.SetActive(false);
     }
 
     /// <summary>
@@ -74,7 +75,7 @@ public class LoadManager : SingletonMonoBehaviour<LoadManager>
     /// <param name="type"></param>
     /// <param name="callback"></param>
     public void Transition(string nextSceneName, LoadSceneMode mode, Action callback = null) {
-        if (m_isTransition) return;
+        if (_isTransition) return;
         ShowLoadingMessage();
         StartCoroutine(AsyncTransition(nextSceneName, mode, callback));
     }
@@ -87,7 +88,7 @@ public class LoadManager : SingletonMonoBehaviour<LoadManager>
     /// <param name="callback"></param>
     /// <returns></returns>
 	IEnumerator AsyncTransition(string nextSceneName, LoadSceneMode mode, Action callback) {
-        m_isTransition = true;
+        _isTransition = true;
 
         var request = SceneManager.LoadSceneAsync(nextSceneName, mode);
         request.allowSceneActivation = false;   //読み込み後すぐ展開されないように
@@ -104,45 +105,10 @@ public class LoadManager : SingletonMonoBehaviour<LoadManager>
         }
 
         if (callback != null) {
-            //HideLoadingMessage();
+            HideLoadingMessage();
             callback();
         }
 
-        m_isTransition = false;
-    }
-
-    // フェードアウト
-    public IEnumerator FadeOut(Action complete = null, float time = 0)
-    {
-        _fadeRenderer.gameObject.SetActive(true);
-        var fadeMat = _fadeRenderer.material;
-        float fadeSec = 0f;
-        do
-        {
-            fadeSec += Time.deltaTime;
-            fadeMat.color = new Color(0, 0, 0, Mathf.Clamp01(fadeSec));
-            yield return null;
-        } while (fadeSec < 1f);
-        
-        complete();
-        yield return null;
-    }
-
-    // フェードイン
-    public IEnumerator FadeIn(Action complete, float time = 0)
-    {
-        var fadeMat = _fadeRenderer.material;
-        float fadeSec = 1f;
-        do
-        {
-            fadeSec -= Time.deltaTime;
-            fadeMat.color = new Color(0, 0, 0, Mathf.Clamp01(fadeSec));
-            yield return null;
-        } while (fadeSec > 0f);
-        
-        _fadeRenderer.gameObject.SetActive(false);
-        
-        complete();
-        yield return null;
+        _isTransition = false;
     }
 }

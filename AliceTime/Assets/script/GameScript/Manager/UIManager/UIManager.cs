@@ -5,7 +5,9 @@ using KamioriInput;
 /// <summary>
 /// タッチ操作まで巻き取るかどうか(一旦気にしなくていいかも)
 /// </summary>
-public abstract class UIManager : MonoBehaviour, IKeyEventHandler, ITouchEventHandler {
+public abstract class UIManager : MonoBehaviour, IKeyEventHandler, ITouchEventHandler
+{
+	protected Canvas _myCanvas;
     public abstract void DoCrossKeyEvent (KeyInfo info);
 	public abstract void DoJumpKey (KeyInfo info);
 	public abstract bool DoTouchBegan (TouchInfo[] info);
@@ -23,10 +25,13 @@ public abstract class UIManager : MonoBehaviour, IKeyEventHandler, ITouchEventHa
 
     private float border = 0.25f;
 
-    public void Initialization() 
+    public void Initialization(Canvas canvas) 
 	{
 		AliceInputManager.RegisterTouchEventHandler (this);
-    }
+
+		_myCanvas = canvas;
+		_myCanvas.worldCamera = CameraManager.Instance.GetUiCamera();
+	}
 
     public void Finalization()
 	{

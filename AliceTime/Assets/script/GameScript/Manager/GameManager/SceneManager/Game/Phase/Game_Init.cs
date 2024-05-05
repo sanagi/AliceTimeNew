@@ -44,7 +44,7 @@ public class Game_Init : PhaseBase
         MainGameManager.SetPlayStage(GameDefine.DEBUG_STAGE);
         
         //フェードインしてゲーム開始
-        LoadManager.Instance.StartCoroutine(LoadManager.Instance.FadeIn(() =>
+        FadeManager.Instance.StartCoroutine(FadeManager.Instance.FadeIn(() =>
         {
             //SaveManager.Instance.NowPlayingStage = GameManager.StageID;
             

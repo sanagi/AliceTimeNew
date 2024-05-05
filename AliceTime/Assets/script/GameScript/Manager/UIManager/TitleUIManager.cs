@@ -14,6 +14,8 @@ public class TitleUIManager : UIManager {
 
     public static Player UiPlayer = null;
 
+    private Canvas _titleCanvas = null;
+
     private void Start()
     {
 	    if (UiPlayer == null)
@@ -22,7 +24,7 @@ public class TitleUIManager : UIManager {
 	    }
     }
 
-	    public void SetTsuzuki(GameObject tButton){
+	public void SetTsuzuki(GameObject tButton){
 	    _continueButton = tButton;
 	}
 

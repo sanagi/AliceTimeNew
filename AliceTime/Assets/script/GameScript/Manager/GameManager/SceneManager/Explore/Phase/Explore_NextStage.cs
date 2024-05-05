@@ -15,7 +15,7 @@ public class Explore_NextStage : PhaseBase {
 		
 		((Explore)MainSceneManager.CurrentPhase).SelectedID = ExploreSceneManager.NextID;
 		
-		LoadManager.Instance.StartCoroutine(LoadManager.Instance.FadeOut(() =>
+		FadeManager.Instance.StartCoroutine(FadeManager.Instance.FadeOut(() =>
 		{
 			Scene3DStageManager.Instance.ResetStage();			
 			

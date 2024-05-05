@@ -31,7 +31,7 @@ public class Title_Start : PhaseBase {
         panel = objPanel.GetComponent<TitleStartPanel>();
         panel.Enable();
 
-        LoadManager.Instance.StartCoroutine(LoadManager.Instance.FadeIn(() =>
+        FadeManager.Instance.StartCoroutine(FadeManager.Instance.FadeIn(() =>
         {
             // BGM再生
             SoundManager.Instance.PlayMusic(MusicId.Title);

@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
 using Rewired;
+using Cinemachine;
+
 
 /// <summary>
 /// 現在プレイ中の探検マネージャ
 /// </summary>
-public class ExploreManager : MonoBehaviour
+public class ExploreManager : SingletonMonoBehaviour<ExploreManager>
 {
     /// <summary>
     /// 現在プレイ中の部屋
@@ -14,6 +16,12 @@ public class ExploreManager : MonoBehaviour
     private ExploreSceneManager sceneManager;
     private ExploreUIManager uiManager;
     //private StageRotateController stageRotateController;
+    
+    [SerializeField]
+    private CameraParam _exploreCameraParam;
+    
+    [SerializeField]
+    private Canvas _exploreCanvas;
 
     void Awake()
     {
@@ -35,8 +43,35 @@ public class ExploreManager : MonoBehaviour
         }
 
         sceneManager.Initialization();
-        uiManager.Initialization();
+        uiManager.Initialization(_exploreCanvas);
 
         ExploreSceneManager.Goto(GameDefine.EXPLORE_INIT);
+    }
+    
+    /// <summary>
+    /// 心臓部に入ったときのメインカメラ設定
+    /// </summary>
+    public void CrateAreaSelectCamera(Vector3 cameraPos)
+    {
+        var mainCamera = CameraManager.Instance.GetMainCamera();
+        var cinemaBrain = CameraManager.Instance.GetMainCamera().gameObject.GetComponent<CinemachineBrain>();
+        if (cinemaBrain == null)
+        {
+            cinemaBrain = CameraManager.Instance.GetMainCamera().gameObject.AddComponent<CinemachineBrain>();
+            cinemaBrain.m_UpdateMethod = CinemachineBrain.UpdateMethod.SmartUpdate;
+            cinemaBrain.m_BlendUpdateMethod = CinemachineBrain.BrainUpdateMethod.LateUpdate;
+            cinemaBrain.m_DefaultBlend = new CinemachineBlendDefinition(CinemachineBlendDefinition.Style.EaseInOut, 2f);
+        }
+        
+        //VirtualCameraの親登録
+        var rigParent = new GameObject(GameDefine.CAMERA_RIG);
+
+        var virtualCamera = GameObject.Instantiate(_exploreCameraParam.VirtualCameraFollow);
+        virtualCamera.transform.parent = rigParent.transform;
+        var gamePlay3DCamera = virtualCamera.GetComponent<GamePlay3dCamera>();
+        virtualCamera.transform.localPosition = cameraPos;
+		
+        //詳細設定
+        gamePlay3DCamera.SetUpGameCamera(mainCamera, _exploreCameraParam.FovSize, _exploreCameraParam.FollowOffset);
     }
 }

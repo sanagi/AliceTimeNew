@@ -1,7 +1,7 @@
 ﻿ using UnityEngine;
 using System.Collections;
 
-public class TitleManager : MonoBehaviour {
+public class TitleManager : SingletonMonoBehaviour<TitleManager> {
 	private TitleSceneManager sceneManager;
 	private TitleUIManager uiManager;
 	
@@ -16,19 +16,10 @@ public class TitleManager : MonoBehaviour {
 	public bool trialNextOpen = false;
 	public bool openAnimation = false;
 
-	static private TitleManager _instance;
-	static public TitleManager Instance
-	{
-		get
-		{
-			if (_instance == null) {
-				_instance = FindObjectOfType<TitleManager>();
-			}
-			return _instance;
-		}
-	}
+	[SerializeField]
+	private Canvas _titleCanvas;
 
-    void Awake()
+	void Awake()
     {
         sceneManager = (TitleSceneManager)FindObjectOfType<TitleSceneManager>();
         uiManager = (TitleUIManager)FindObjectOfType<TitleUIManager>();
@@ -61,8 +52,8 @@ public class TitleManager : MonoBehaviour {
 			uiManager.transform.SetParent (transform);
 		}
 
-		sceneManager.Initialization ();
-		uiManager.Initialization ();
+		sceneManager.Initialization();
+		uiManager.Initialization(_titleCanvas);
 		uiManager.SetTsuzuki(TsuzukiButton);
 
 		TitleSceneManager.Goto (GameDefine.TITLE_INIT);

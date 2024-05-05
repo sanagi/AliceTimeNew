@@ -11,6 +11,8 @@ public class CameraManager : SingletonMonoBehaviour<CameraManager>
     private Camera _uiCamera;
     public Camera GetUiCamera() => _uiCamera;
     
+    public Camera GetMainCamera() => Camera.main;
+    
     public Vector3 GetUiPos(Vector3 screenPos)
     {
         var uiPos = CameraManager.Instance.GetUiCamera().ScreenToWorldPoint(Input.mousePosition);

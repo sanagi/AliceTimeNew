@@ -31,7 +31,8 @@ public static class GameDefine
     public static string MAIN_MANAGER = "PrefabPoolManager";    
     public static string TITLE_UI_MANAGER = "TitleUIManager";    
     public static string LOAD_MANAGER = "LoadManager";
-
+    public static string FADE_MANAGER = "LoadManager";
+    
     #endregion
 
     #region tag

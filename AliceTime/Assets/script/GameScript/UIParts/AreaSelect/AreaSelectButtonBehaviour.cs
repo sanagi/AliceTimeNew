@@ -57,7 +57,7 @@ public class AreaSelectButtonBehaviour : MonoBehaviour, IButtonEvent
         else if (TargetSceneManager == MAINSCENE.TITLE)
         {
             AreaSelectUIManager.HidePanel(AREASELECT.PAUSE);
-            LoadManager.Instance.StartCoroutine(LoadManager.Instance.FadeOut(() =>
+            FadeManager.Instance.StartCoroutine(FadeManager.Instance.FadeOut(() =>
             {
                 MainSceneManager.Goto(GameDefine.TITLE);
             }));
@@ -65,7 +65,7 @@ public class AreaSelectButtonBehaviour : MonoBehaviour, IButtonEvent
         else if (TargetSceneManager == MAINSCENE.AREASELECT)
         {
             AreaSelectUIManager.HidePanel(AREASELECT.PAUSE);
-            LoadManager.Instance.StartCoroutine(LoadManager.Instance.FadeOut(() =>
+            FadeManager.Instance.StartCoroutine(FadeManager.Instance.FadeOut(() =>
             {
                 continueData.ResetStageData();
                 SaveManager.Instance.clearNewStage = false;

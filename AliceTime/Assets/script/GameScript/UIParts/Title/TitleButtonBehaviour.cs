@@ -151,7 +151,7 @@ public class TitleButtonBehaviour : MonoBehaviour, IButtonEvent
                     SaveManager.Instance.Story_Hajime();
                 }
             }
-            LoadManager.Instance.StartCoroutine(LoadManager.Instance.FadeOut(() =>
+            FadeManager.Instance.StartCoroutine(FadeManager.Instance.FadeOut(() =>
             {
                 //マップ選択シーンへ遷移
                 MainSceneManager.Goto(GameDefine.AreaSelect);

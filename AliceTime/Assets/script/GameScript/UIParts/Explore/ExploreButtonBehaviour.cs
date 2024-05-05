@@ -60,7 +60,7 @@ public class ExploreButtonBehaviour : MonoBehaviour, IButtonEvent
         else if (TargetSceneManager == MAINSCENE.TITLE)
         {
             GameUIManager.HidePanel(GAMESCENE.PAUSE);
-            LoadManager.Instance.StartCoroutine(LoadManager.Instance.FadeOut(() =>
+            FadeManager.Instance.StartCoroutine(FadeManager.Instance.FadeOut(() =>
             {
                 MainSceneManager.Goto(GameDefine.TITLE);
             }));
@@ -68,7 +68,7 @@ public class ExploreButtonBehaviour : MonoBehaviour, IButtonEvent
         else if (TargetSceneManager == MAINSCENE.AREASELECT)
         {
             GameUIManager.HidePanel(GAMESCENE.PAUSE);
-            LoadManager.Instance.StartCoroutine(LoadManager.Instance.FadeOut(() =>
+            FadeManager.Instance.StartCoroutine(FadeManager.Instance.FadeOut(() =>
             {
                 continueData.ResetStageData();
                 SaveManager.Instance.clearNewStage = false;

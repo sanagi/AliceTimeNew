@@ -5,7 +5,7 @@ using Cinemachine;
 /// <summary>
 /// 現在プレイ中のマップ選択マネージャ
 /// </summary>
-public class AreaSelectManager : MonoBehaviour
+public class AreaSelectManager : SingletonMonoBehaviour<AreaSelectManager>
 {
     public static void SetPlayFloor(int floorId)
     {
@@ -18,6 +18,12 @@ public class AreaSelectManager : MonoBehaviour
     
     private AreaSelectSceneManager sceneManager;
     private AreaSelectUIManager uiManager;
+
+    [SerializeField]
+    private CameraParam _areaCameraParam;
+
+    [SerializeField]
+    private Canvas _areaSelectCanvas;
 
     void Awake()
     {
@@ -39,40 +45,35 @@ public class AreaSelectManager : MonoBehaviour
         }
 
         sceneManager.Initialization();
-        uiManager.Initialization();
+        uiManager.Initialization(_areaSelectCanvas);
 
         AreaSelectSceneManager.Goto(GameDefine.AREASELECT_INIT);
     }
-    
+
     /// <summary>
     /// 心臓部に入ったときのメインカメラ設定
     /// </summary>
     public void CrateAreaSelectCamera(Vector3 cameraPos)
     {
-        /*
-        var cinemaBrain = cameraManager.MainCamera.gameObject.GetComponent<CinemachineBrain>();
+        var mainCamera = CameraManager.Instance.GetMainCamera();
+        var cinemaBrain = CameraManager.Instance.GetMainCamera().gameObject.GetComponent<CinemachineBrain>();
         if (cinemaBrain == null)
         {
-            cinemaBrain = cameraManager.MainCamera.gameObject.AddComponent<CinemachineBrain>();
+            cinemaBrain = CameraManager.Instance.GetMainCamera().gameObject.AddComponent<CinemachineBrain>();
             cinemaBrain.m_UpdateMethod = CinemachineBrain.UpdateMethod.SmartUpdate;
             cinemaBrain.m_BlendUpdateMethod = CinemachineBrain.BrainUpdateMethod.LateUpdate;
             cinemaBrain.m_DefaultBlend = new CinemachineBlendDefinition(CinemachineBlendDefinition.Style.EaseInOut, 2f);
         }
-
-        //cameraManager.MainCamera.clearFlags = CameraClearFlags.SolidColor;
-        //cameraManager.MainCamera.backgroundColor = Color.black;
-
+        
         //VirtualCameraの親登録
         var rigParent = new GameObject(GameDefine.CAMERA_RIG);
-        VirtualCameraRootTransform = rigParent.transform;
-		
-        var virtualCamera = GameObject.Instantiate(CameraManager.Instance.CameraParam.VirtualCameraFollow);
+
+        var virtualCamera = GameObject.Instantiate(_areaCameraParam.VirtualCameraFollow);
         virtualCamera.transform.parent = rigParent.transform;
-        GamePlay3DCamera = virtualCamera.GetComponent<GamePlay3dCamera>();
+        var gamePlay3DCamera = virtualCamera.GetComponent<GamePlay3dCamera>();
         virtualCamera.transform.localPosition = cameraPos;
 		
-        //ゲームカメラ側で詳細設定
-        GamePlay3DCamera.SetUpGameCamera(MainCamera, CameraParam.FovSize, CameraParam.FollowOffset);
-        */
+        //詳細設定
+        gamePlay3DCamera.SetUpGameCamera(mainCamera, _areaCameraParam.FovSize, _areaCameraParam.FollowOffset);
     }
 }
