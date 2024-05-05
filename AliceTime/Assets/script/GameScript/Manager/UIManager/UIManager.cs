@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using KamioriInput;
+using UnityEngine.UI;
 
 /// <summary>
 /// タッチ操作まで巻き取るかどうか(一旦気にしなくていいかも)
@@ -28,8 +29,9 @@ public abstract class UIManager : MonoBehaviour, IKeyEventHandler, ITouchEventHa
     public void Initialization(Canvas canvas) 
 	{
 		AliceInputManager.RegisterTouchEventHandler (this);
-
+		
 		_myCanvas = canvas;
+		_myCanvas.renderMode = RenderMode.ScreenSpaceCamera;
 		_myCanvas.worldCamera = CameraManager.Instance.GetUiCamera();
 	}
 
@@ -37,6 +39,17 @@ public abstract class UIManager : MonoBehaviour, IKeyEventHandler, ITouchEventHa
 	{
 		AliceInputManager.UnregisterTouchEventHandler (this);
 	}
+    
+    protected void Set3DScale(RawImage image3D)
+    {
+	    //16:9のスケール比にした上でwidthが画面いっぱいになるようにセット
+	    var imageRect = image3D.rectTransform;
+	    var localScale = imageRect.localScale;
+
+	    float aspect = (float)Screen.width / (float)Screen.height;
+	    localScale.y *= aspect;
+	    image3D.rectTransform.localScale = localScale;
+    }
 
 	#region IKeyEventHandler implementation
 

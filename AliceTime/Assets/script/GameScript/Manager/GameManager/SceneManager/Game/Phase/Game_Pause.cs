@@ -101,8 +101,9 @@ public class Game_Pause : PhaseBase {
             }
         }
         */
-        GameUIManager.uiPlayer.controllers.maps.SetMapsEnabled(false, "Game Main");
-        GameUIManager.uiPlayer.controllers.maps.SetMapsEnabled(true, "System");
+
+        GameUIManager.uiPlayer.controllers.maps.SetAllMapsEnabled(false);
+        GameUIManager.uiPlayer.controllers.maps.SetMapsEnabled(true, GameDefine.SYSTEM_REWIRED);
     }
 
     public override void OnExit (PhaseBase nextPhase)

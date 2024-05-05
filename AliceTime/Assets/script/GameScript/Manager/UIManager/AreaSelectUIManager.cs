@@ -3,6 +3,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using KamioriInput;
 using Rewired;
+using UnityEngine.UI;
 
 
 public class AreaSelectUIManager : UIManager
@@ -14,6 +15,7 @@ public class AreaSelectUIManager : UIManager
 
     public static Player uiPlayer = null;
 
+    private RawImage _3dImage;
     public static void RegistedPanel(AreaSelectPanelBehaviour panel)
     {
         if (panels == null)
@@ -56,15 +58,11 @@ public class AreaSelectUIManager : UIManager
         }
     }
 
-#if UNITY_SWITCH
-    private void Update()
+    public void Set3DRawImage(RawImage rawImage)
     {
-        if (uiPlayer == null)
-        {
-            uiPlayer = ReInput.players.GetPlayer(0);
-        }
+        _3dImage = rawImage;
+        Set3DScale(_3dImage);
     }
-#endif
 
     public static void DisplayPanel(AREASELECT scene)
     {
@@ -103,7 +101,6 @@ public class AreaSelectUIManager : UIManager
         }
         DisableInput();
     }
-
 
     #region implemented abstract members of UIManager
     public override void DoCrossKeyEvent(KeyInfo info) { }

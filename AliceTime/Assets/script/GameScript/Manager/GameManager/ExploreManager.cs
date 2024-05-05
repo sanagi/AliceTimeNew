@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Rewired;
 using Cinemachine;
-
+using UnityEngine.UI;
 
 /// <summary>
 /// 現在プレイ中の探検マネージャ
@@ -23,6 +23,9 @@ public class ExploreManager : SingletonMonoBehaviour<ExploreManager>
     [SerializeField]
     private Canvas _exploreCanvas;
 
+    [SerializeField]
+    private RawImage _3dImage;
+    
     void Awake()
     {
         sceneManager = (ExploreSceneManager)FindObjectOfType<ExploreSceneManager>();
@@ -44,6 +47,7 @@ public class ExploreManager : SingletonMonoBehaviour<ExploreManager>
 
         sceneManager.Initialization();
         uiManager.Initialization(_exploreCanvas);
+        uiManager.Set3DRawImage(_3dImage);
 
         ExploreSceneManager.Goto(GameDefine.EXPLORE_INIT);
     }

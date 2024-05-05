@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using Rewired;
 using Cinemachine;
+using UnityEngine.UI;
 
 /// <summary>
 /// 現在プレイ中のマップ選択マネージャ
@@ -25,6 +26,9 @@ public class AreaSelectManager : SingletonMonoBehaviour<AreaSelectManager>
     [SerializeField]
     private Canvas _areaSelectCanvas;
 
+    [SerializeField]
+    private RawImage _3dImage;
+    
     void Awake()
     {
         sceneManager = (AreaSelectSceneManager)FindObjectOfType<AreaSelectSceneManager>();
@@ -46,6 +50,7 @@ public class AreaSelectManager : SingletonMonoBehaviour<AreaSelectManager>
 
         sceneManager.Initialization();
         uiManager.Initialization(_areaSelectCanvas);
+        uiManager.Set3DRawImage(_3dImage);
 
         AreaSelectSceneManager.Goto(GameDefine.AREASELECT_INIT);
     }

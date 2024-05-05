@@ -22,7 +22,9 @@ public class Title : PhaseBase {
         LoadManager.Instance.Transition(GameDefine.TITLE, LoadSceneMode.Single, () => {
             // [Rewired] enable key map
             var player = ReInput.players.GetPlayer(0);
-            player.controllers.maps.SetMapsEnabled(true, "System");
+
+            player.controllers.maps.SetAllMapsEnabled(false);
+            player.controllers.maps.SetMapsEnabled(true, GameDefine.SYSTEM_REWIRED);
         });
     }
 

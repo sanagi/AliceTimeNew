@@ -42,22 +42,18 @@ public class Explore_Init : PhaseBase
             //コントローラーはつけるがまだ動かさない
             PlayerManager.Instance.EnablePhysics();
             PlayerManager.Instance.DisableControllable();
-
-            //フェードインしてゲーム開始
-            FadeManager.Instance.StartCoroutine(FadeManager.Instance.FadeIn(() =>
-            {
-                // BGM
+            
+            // BGM
                 
-                //カメラの初期設定
-                ExploreManager.Instance.CrateAreaSelectCamera(stageParam.Camera_InitPos);
+            //カメラの初期設定
+            ExploreManager.Instance.CrateAreaSelectCamera(stageParam.Camera_InitPos);
 
-                //SaveManager.Instance.NowPlayingStage = int.Parse(floorId);
+            //SaveManager.Instance.NowPlayingStage = int.Parse(floorId);
 
-                //イベントシーンが始まる条件などがあればここで記述
-                ExploreSceneManager.Goto(GameDefine.EXPLORE_START);
+            //イベントシーンが始まる条件などがあればここで記述
+            ExploreSceneManager.Goto(GameDefine.EXPLORE_START);
                 
-                ExploreManager.CurrentStageID = int.Parse(stageId);
-            }));
+            ExploreManager.CurrentStageID = int.Parse(stageId);
         });
     }
 

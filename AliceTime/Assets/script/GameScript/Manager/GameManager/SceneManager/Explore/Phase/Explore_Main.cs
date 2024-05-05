@@ -18,7 +18,7 @@ public class Explore_Main : PhaseBase
         // [Rewired] キーマップを登録
         var player = ReInput.players.GetPlayer(0);
         player.controllers.maps.SetAllMapsEnabled(false);
-        player.controllers.maps.SetMapsEnabled(true, GameDefine.GAME_MAIN_MAPS_REWIRED);
+        player.controllers.maps.SetMapsEnabled(true, GameDefine.EXPLORE_MAPS_REWIRED);
 
         PlayerManager.Instance.EnableControllable();
 
@@ -37,7 +37,7 @@ public class Explore_Main : PhaseBase
     {
         // [Rewired] disable key map
         var player = ReInput.players.GetPlayer(0);
-        player.controllers.maps.SetMapsEnabled(false, GameDefine.GAME_MAIN_MAPS_REWIRED);
+        player.controllers.maps.SetMapsEnabled(false, GameDefine.EXPLORE_MAPS_REWIRED);
 
         GameUIManager.HidePanel(GAMESCENE.MAIN);    // Order:400
 

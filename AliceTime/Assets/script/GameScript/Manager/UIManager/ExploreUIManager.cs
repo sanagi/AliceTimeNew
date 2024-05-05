@@ -1,8 +1,8 @@
-﻿
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections.Generic;
 using KamioriInput;
 using Rewired;
+using UnityEngine.UI;
 
 // ゲーム中のバーチャルコントローラを除くUIを管理
 //Game画面だとSetActiveになる瞬間があるけど直接Worldに行っちゃうと(つづきから)だとSetActiveされずにこのクラスにアクセスされる時があった
@@ -15,6 +15,8 @@ public class ExploreUIManager : UIManager
     IButtonEvent touchedButton;
 
     public static Player uiPlayer = null;
+    
+    private RawImage _3dImage;
 
     public static void RegistedPanel(ExplorePanelBehaviour panel)
     {
@@ -106,6 +108,11 @@ public class ExploreUIManager : UIManager
         DisableInput();
     }
 
+    public void Set3DRawImage(RawImage rawImage)
+    {
+        _3dImage = rawImage;
+        Set3DScale(_3dImage);
+    }
 
     #region implemented abstract members of UIManager
     public override void DoCrossKeyEvent(KeyInfo info) { }

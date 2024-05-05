@@ -50,9 +50,6 @@ public static class GameDefine
 
     #region Input
 
-    public const string CATEGORY_GAME = "Game_Main";
-    public const string CATEGORY_SYSTEM = "System";
-
     #region UI
 
     public const string ACTION_MOVE_HORIZONTAL_UI = "UIHorizontal";
@@ -180,8 +177,9 @@ public static class GameDefine
 
     #region RewiredMap
 
-    public const string GAME_MAIN_MAPS_REWIRED = "GameMainMaps";
-
+    public const string GEAR_GAME_REWIRED = "GearGame";
+    public const string EXPLORE_MAPS_REWIRED = "ExploreGame";
+    public const string SYSTEM_REWIRED = "System";
 
     #endregion
 

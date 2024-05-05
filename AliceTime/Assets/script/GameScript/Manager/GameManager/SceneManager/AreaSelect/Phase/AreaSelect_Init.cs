@@ -34,21 +34,16 @@ public class AreaSelect_Init : PhaseBase
             PlayerManager.Instance.EnablePhysics();
             PlayerManager.Instance.DisableControllable();
 
-            //フェードインしてゲーム開始
-            FadeManager.Instance.StartCoroutine(FadeManager.Instance.FadeIn(() =>
-            {
-                // BGM
+            // BGM
                 
-                //カメラの初期設定
-                AreaSelectManager.Instance.CrateAreaSelectCamera(floorParam.Camera_InitPos);
+            //カメラの初期設定
+            AreaSelectManager.Instance.CrateAreaSelectCamera(floorParam.Camera_InitPos);
+            //イベントシーンが始まる条件などがあればここで記述
+            AreaSelectSceneManager.Goto(GameDefine.AREASELECT_START);
+            
+            SaveManager.Instance.NowPlayingStage = Int32.Parse(floorId);
 
-                SaveManager.Instance.NowPlayingStage = Int32.Parse(floorId);
-
-                //イベントシーンが始まる条件などがあればここで記述
-                AreaSelectSceneManager.Goto(GameDefine.AREASELECT_START);
-                
-                AreaSelectManager.SetPlayFloor(int.Parse(floorId));
-            }));
+            AreaSelectManager.SetPlayFloor(int.Parse(floorId));
         });
     }
 

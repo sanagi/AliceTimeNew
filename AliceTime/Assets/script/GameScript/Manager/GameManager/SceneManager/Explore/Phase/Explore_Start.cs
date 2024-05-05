@@ -18,9 +18,13 @@ public class Explore_Start : PhaseBase {
 	    //入力を初期化
 	    AliceInputManager.ClearInput();
 
-	    // ゲーム開始
-	    ExploreSceneManager.Goto(GameDefine.EXPLORE_MAIN);
-	}
+	    //フェードインしてゲーム開始
+	    FadeManager.Instance.StartCoroutine(FadeManager.Instance.FadeIn(() =>
+	    {
+		    // ゲーム開始
+		    ExploreSceneManager.Goto(GameDefine.EXPLORE_MAIN);
+	    }));
+    }
 
 	public override void OnExit (PhaseBase nextPhase)
 	{

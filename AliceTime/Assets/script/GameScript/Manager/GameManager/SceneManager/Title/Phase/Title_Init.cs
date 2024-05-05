@@ -14,7 +14,7 @@ public class Title_Init : PhaseBase {
         // [Rewired] enable key map
         var player = ReInput.players.GetPlayer(0);
         player.controllers.maps.SetAllMapsEnabled(false);
-        player.controllers.maps.SetMapsEnabled(true, GameDefine.CATEGORY_SYSTEM);
+        player.controllers.maps.SetMapsEnabled(true, GameDefine.SYSTEM_REWIRED);
 
         //TouchEffectManger.Instance.dragEffect = false;
         TitleManager.Instance.wait = true;

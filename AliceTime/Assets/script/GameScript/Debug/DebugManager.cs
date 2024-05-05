@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 
 #if UNITY_EDITOR
-public class DebugManager : MonoBehaviour{
+public class DebugManager : SingletonMonoBehaviour<DebugManager> {
 	/*public class DebugScene
 	{
 		public int stageId = -1;
@@ -47,19 +47,7 @@ public class DebugManager : MonoBehaviour{
 	
 	[SerializeField]
 	private Text _displayAreaNameText;
-
-	static private DebugManager _instance;
-	static public DebugManager Instance
-	{
-		get
-		{
-			if (_instance == null) {
-				_instance = FindObjectOfType<DebugManager>();
-			}
-			return _instance;
-		}
-	}
-
+	
 	private void Start()
 	{
 		DontDestroyOnLoad (gameObject);
@@ -68,6 +56,7 @@ public class DebugManager : MonoBehaviour{
 	public void SetCurrentPhase(string phaseName)
 	{
 		_displayPhaseText.text = phaseName;
+		Debug.Log(phaseName);
 	}
 
 	public void SetAreaName(string areaName)

@@ -34,8 +34,9 @@ public class Explore : PhaseBase {
         LoadManager.Instance.Transition(sceneName, LoadSceneMode.Single, () => {
             // [Rewired] enable key map
             var player = ReInput.players.GetPlayer(0);
+            
             player.controllers.maps.SetAllMapsEnabled(false);
-            player.controllers.maps.SetMapsEnabled(true, "System");
+            player.controllers.maps.SetMapsEnabled(true, GameDefine.EXPLORE_MAPS_REWIRED);
         });
 	}
 

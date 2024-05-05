@@ -18,8 +18,13 @@ public class AreaSelect_Start : PhaseBase {
         //入力を初期化
         AliceInputManager.ClearInput();
 
-        // ゲーム開始
-        AreaSelectSceneManager.Goto(GameDefine.AREASELECT_MAIN);
+        //フェードインしてゲーム開始
+        FadeManager.Instance.StartCoroutine(FadeManager.Instance.FadeIn(() =>
+        {
+	        // ゲーム開始
+	        AreaSelectSceneManager.Goto(GameDefine.AREASELECT_MAIN);
+        }));
+
 	}
 
 	public override void OnExit (PhaseBase nextPhase)
