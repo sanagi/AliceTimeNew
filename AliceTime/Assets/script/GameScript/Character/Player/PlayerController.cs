@@ -172,6 +172,8 @@ public abstract class PlayerController : MonoBehaviour, IKeyEventHandler
     //回転判定用
     private bool rotate;
 
+    private Camera _3dMainCamera;
+
     private void SetupFlag()
     {
         isControllable = false;
@@ -243,6 +245,7 @@ public abstract class PlayerController : MonoBehaviour, IKeyEventHandler
     public void Initialize()
     {
         _aliceInputManager = AliceInputManager.Instance;
+        _3dMainCamera = CameraManager.Instance.GetMainCamera();
         
         // 継承先の初期化メソッドを呼ぶ
         SetupDefaultPlayerParams();
@@ -800,52 +803,6 @@ public abstract class PlayerController : MonoBehaviour, IKeyEventHandler
     /// </summary>
     private void UpdateAnimation(float moveSpeed)
     {
-                //Animationオブジェクトの位置補正が必要なら行っておく
-        /*if (GameSceneManager.CurrentPhaseState == GAMESCENE.MAIN)
-        {
-            if (currentInput.x == currentMove.x || (currentInput.x < 0 && currentMove.x < 0) || (currentInput.x > 0 && currentMove.x > 0))
-            {
-                forwardAngle = currentMove.x < 0 ? 180f : currentMove.x > 0 ? 0 : forwardAngle;
-                if (Mathf.Abs(Mathf.DeltaAngle(m_Transform.localEulerAngles.y, forwardAngle)) > 0.1f)
-                {
-                    rotate = true;
-                    m_Transform.localRotation = Quaternion.Euler(new Vector3(0f, m_Transform.eulerAngles.y + playerParams.deltaTurnAngle, 0f));
-                }
-                else
-                {
-                    rotate = false;
-                    m_Transform.localRotation = Quaternion.Euler(new Vector3(0f, forwardAngle, 0f));
-                    Vector3 euler = gameObject.transform.localRotation.eulerAngles;
-                    if (euler.y == 0)
-                    {
-                        kureha.transform.localPosition = new Vector3(kureha.transform.localPosition.x, kureha.transform.localPosition.y, -1.5f);
-                    }
-                    else if (175.0f < euler.y && euler.y < 181.0f)
-                    {
-                        kureha.transform.localPosition = new Vector3(kureha.transform.localPosition.x, kureha.transform.localPosition.y, 1.5f);
-                    }
-                }
-            }
-            else
-            {
-
-                if (m_Transform.eulerAngles.y != 0f || m_Transform.eulerAngles.y != 180f)
-                {
-                    if (Mathf.Abs(Mathf.DeltaAngle(m_Transform.localEulerAngles.y, forwardAngle)) > 0.1f)
-                    {
-                        rotate = true;
-                        m_Transform.localRotation = Quaternion.Euler(new Vector3(0f, m_Transform.eulerAngles.y + playerParams.deltaTurnAngle, 0f));
-                    }
-                    else
-                    {
-                        rotate = false;
-                        m_Transform.localRotation = Quaternion.Euler(new Vector3(0f, forwardAngle, 0f));
-                    }
-                }
-            }
-        }
-        */
-        
         // アニメーションの更新
         if (playerAnim != null && playerAnim.CurrentAnimationType() == currentState)
         {
@@ -925,8 +882,14 @@ public abstract class PlayerController : MonoBehaviour, IKeyEventHandler
             currentInput = Vector3.zero;
             return;
         }
-        currentInput.x = _aliceInputManager.MoveDirection.CurrentValue.x;
-        currentInput.z = _aliceInputManager.MoveDirection.CurrentValue.z;
+
+        Vector3 forwardXZ = Vector3.zero;
+        forwardXZ.x = 1.0f;
+        forwardXZ.z = 1.0f;
+        
+        // 方向キーの入力値とカメラの向きから、移動方向を決定
+        Vector3 cameraForward = Vector3.Scale(_3dMainCamera.transform.forward, forwardXZ).normalized;
+        currentInput = cameraForward * _aliceInputManager.MoveDirection.CurrentValue.z + _3dMainCamera.transform.right * _aliceInputManager.MoveDirection.CurrentValue.x;
     }
 
     private void UpdateJump()

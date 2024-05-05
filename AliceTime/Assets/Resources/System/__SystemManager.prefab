@@ -380,7 +380,7 @@ MonoBehaviour:
   _sceneManager: {fileID: 8175657358507187678}
   _soundManager: {fileID: 1600411110887826458}
   _saveManager: {fileID: 3773957231490932508}
-  _debugManager: {fileID: 0}
+  _debugManager: {fileID: 6198577171121584671}
   _prefabPoolManager: {fileID: 3276327050815898591}
   _effectManager: {fileID: 1740206375014451760}
   _cameraManager: {fileID: 6486806511527406339}
@@ -996,3 +996,14 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7662523346667587546, guid: 8a2bf258b81889d4192959ad765f8054, type: 3}
   m_PrefabInstance: {fileID: 6529029102330157387}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &6198577171121584671 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 909164690861433684, guid: 8a2bf258b81889d4192959ad765f8054, type: 3}
+  m_PrefabInstance: {fileID: 6529029102330157387}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9669ab0c428c5374f9f3ff47d648a31e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
