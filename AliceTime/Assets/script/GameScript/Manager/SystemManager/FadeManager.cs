@@ -9,6 +9,8 @@ public class FadeManager : SingletonMonoBehaviour<FadeManager>
 {
     [SerializeField]
     private Image _fadeImage = null;
+
+    public Canvas FadeCanvas;
     
     // フェードアウト
     public IEnumerator FadeOut(Action complete = null, float time = 0)

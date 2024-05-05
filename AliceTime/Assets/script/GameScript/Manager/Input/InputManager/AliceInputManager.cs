@@ -11,14 +11,6 @@ using R3;
 /// </summary>
 public class AliceInputManager : SingletonMonoBehaviour<AliceInputManager>
 {
-	public enum InputType
-	{
-		KeyMouse,
-		Controller,
-	}
-
-	public InputType CurrentInput = InputType.KeyMouse;
-
 	/// <summary>
 	/// プレイヤーの移動方向入力
 	/// </summary>
@@ -85,11 +77,11 @@ public class AliceInputManager : SingletonMonoBehaviour<AliceInputManager>
 		_moveDirection.Value = currentInputAxis;
 		_keyPointMoveDirection.Value = currentInputKeyPointAxis;
 
-		/*if (IsClick())
+		if (IsClick())
 		{
 			var tempPos = CameraManager.Instance.GetUiPos(Input.mousePosition);
-			EffectManager.Instance.PlayEffect(EffectId.TouchHit, tempPos);      //エフェクト発行
-		}*/
+			EffectManager.Instance.PlayEffect(EffectId.TouchHit, tempPos, Quaternion.identity, FadeManager.Instance.FadeCanvas.transform);      //エフェクト発行
+		}
 	}
 
 	/// <summary>

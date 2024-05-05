@@ -629,7 +629,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9364675768db6b640ae93e3f66ad2081, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  preloadPrefabInfo: []
 --- !u!1001 &1327751155479818752
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -835,6 +834,10 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 6161271674472143437}
+    - target: {fileID: 3082105949566531692, guid: 42703410cd9689245b28a569fcffabae, type: 3}
+      propertyPath: FadeCanvas
+      value: 
+      objectReference: {fileID: 1284224568616806647}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -843,6 +846,11 @@ PrefabInstance:
 --- !u!4 &1284224567134932199 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2643993438341701607, guid: 42703410cd9689245b28a569fcffabae, type: 3}
+  m_PrefabInstance: {fileID: 3846955300065792768}
+  m_PrefabAsset: {fileID: 0}
+--- !u!223 &1284224568616806647 stripped
+Canvas:
+  m_CorrespondingSourceObject: {fileID: 2643993440056097783, guid: 42703410cd9689245b28a569fcffabae, type: 3}
   m_PrefabInstance: {fileID: 3846955300065792768}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &2280781284806339436 stripped
