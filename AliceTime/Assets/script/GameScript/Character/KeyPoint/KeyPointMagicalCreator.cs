@@ -2,7 +2,6 @@
 using UnityEngine;
 using System.Collections;
 using Rewired;
-using KamioriInput;
 using System.Collections.Generic;
 using InputSupport;
 using R3;

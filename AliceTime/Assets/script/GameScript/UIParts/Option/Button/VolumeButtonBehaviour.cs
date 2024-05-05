@@ -1,9 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using KamioriInput;
 using System.Collections;
 
-public class VolumeButtonBehaviour : MonoBehaviour, IButtonEvent
+public class VolumeButtonBehaviour : MonoBehaviour
 {
     public enum VolumeType
     {
@@ -17,8 +16,6 @@ public class VolumeButtonBehaviour : MonoBehaviour, IButtonEvent
     public Image buttonImage;
 
     private GameObject VirtualCanvas;
-    private Stick stick;
-    private Jump jump;
 
     private float offTimer = 0f;
     private const float showLimit = 3.750f;
@@ -27,9 +24,6 @@ public class VolumeButtonBehaviour : MonoBehaviour, IButtonEvent
     {
         slider.onValueChanged.AddListener(delegate { ValueChangeCheck(); });
         buttonImage = gameObject.GetComponent<Image>();
-        VirtualCanvas = VirtualControllerEvent.GetVirtual();
-        jump = VirtualCanvas.transform.Find("controller").gameObject.transform.Find("Jump").gameObject.transform.Find("button").gameObject.GetComponent<Jump>();
-        stick = VirtualCanvas.transform.Find("controller").gameObject.transform.Find("Stick").gameObject.transform.Find("button").gameObject.GetComponent<Stick>();
     }
 
     void Update()
@@ -46,14 +40,6 @@ public class VolumeButtonBehaviour : MonoBehaviour, IButtonEvent
                 if (offTimer > showLimit)
                 {
                     offTimer = 0f;
-                    if (VirtualCanvas == null)
-                    {
-                        VirtualCanvas = VirtualControllerEvent.GetVirtual();
-                    }
-                    if (VirtualCanvas != null)
-                    {
-                        VirtualCanvas.SetActive(false);
-                    }
                 }
             }
         }
@@ -109,15 +95,6 @@ public class VolumeButtonBehaviour : MonoBehaviour, IButtonEvent
             options.textSpeed = defaultValue;
         }
         SaveManager.Instance.SetOptions(options);
-
-        if (VirtualCanvas == null)
-        {
-            VirtualCanvas = VirtualControllerEvent.GetVirtual();
-        }
-        if (VirtualCanvas != null)
-        {
-            VirtualCanvas.SetActive(false);
-        }
     }
 
     public void ValueChangeCheck()
@@ -134,27 +111,7 @@ public class VolumeButtonBehaviour : MonoBehaviour, IButtonEvent
         else if (volumeType == VolumeType.CONTROL_POS_RATE)
         {
             OptionManager.Instance.ChangeControllerPositionRate(defaultValue);
-            if (VirtualCanvas == null)
-            {
-                VirtualCanvas = VirtualControllerEvent.GetVirtual();
-            }
             VirtualCanvas.SetActive(true);
-            if (stick == null)
-            {
-                stick = VirtualCanvas.transform.Find("controller").gameObject.transform.Find("Stick").gameObject.transform.Find("button").gameObject.GetComponent<Stick>();
-            }
-            if (stick != null)
-            {
-                stick.SetScaleSize();
-            }
-            if (jump == null)
-            {
-                jump = VirtualCanvas.transform.Find("controller").gameObject.transform.Find("Jump").gameObject.transform.Find("button").gameObject.GetComponent<Jump>();
-            }
-            if (jump != null)
-            {
-                jump.SetScaleSize();
-            }
         }
         else if (volumeType == VolumeType.CONTROL_SIZE_RATE)
         {
@@ -170,58 +127,10 @@ public class VolumeButtonBehaviour : MonoBehaviour, IButtonEvent
             OptionManager.Instance.ChangeControllerSizeRate(value);
 
             VirtualCanvas.SetActive(true);
-            if (VirtualCanvas == null)
-            {
-                VirtualCanvas = VirtualControllerEvent.GetVirtual();
-            }
-            if (stick == null)
-            {
-                stick = VirtualCanvas.transform.Find("controller").gameObject.transform.Find("Stick").gameObject.transform.Find("button").gameObject.GetComponent<Stick>();
-            }
-            if (stick != null)
-            {
-                stick.SetScaleSize();
-            }
-            if (jump == null)
-            {
-                jump = VirtualCanvas.transform.Find("controller").gameObject.transform.Find("Jump").gameObject.transform.Find("button").gameObject.GetComponent<Jump>();
-            }
-            if (jump != null)
-            {
-                jump.SetScaleSize();
-            }
         }
         else if (volumeType == VolumeType.TEXT_SPEED)
         {
             OptionManager.Instance.ChangeTextSpeed(defaultValue);
         }
     }
-
-    #region IButtonEvent implementation
-    public void FireButtonEvent()
-    {
-        if (buttonImage == null)
-        {
-            buttonImage = gameObject.GetComponent<Image>();
-        }
-        buttonImage.color = new Color(0.55f, 0.55f, 0.55f, 1.0f);
-    }
-    public void ReleaseButtonEvent()
-    {
-        if (volumeType == VolumeType.CONTROL_SIZE_RATE || volumeType == VolumeType.CONTROL_POS_RATE)
-        {
-            if (VirtualCanvas == null)
-            {
-                VirtualCanvas = VirtualControllerEvent.GetVirtual();
-            }
-            if (VirtualCanvas != null)
-            {
-                VirtualCanvas.SetActive(false);
-            }
-        }
-    }
-    public void ReleaseOutButtonEvent()
-    {
-    }
-    #endregion
 }

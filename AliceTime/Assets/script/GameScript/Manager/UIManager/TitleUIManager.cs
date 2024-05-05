@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-using KamioriInput;
 using Rewired;
 
 public class TitleUIManager : UIManager {
@@ -27,34 +26,6 @@ public class TitleUIManager : UIManager {
 	public void SetTsuzuki(GameObject tButton){
 	    _continueButton = tButton;
 	}
-
-	    #region implemented abstract members of UIManager
-
-    public override void DoCrossKeyEvent (KeyInfo info)
-	{
-		
-	}
-
-	public override void DoJumpKey (KeyInfo info)
-	{
-	}
-
-	public override bool DoTouchBegan (TouchInfo[] info)
-	{
-		return false;
-	}
-
-	public override bool DoTouchMoved (TouchInfo[] info)
-	{
-		return false;
-	}
-
-	public override bool DoTouchEnded (TouchInfo[] info)
-	{
-		return false;
-	}
-
-	#endregion
 
 	public int MyOrder {
 		get {

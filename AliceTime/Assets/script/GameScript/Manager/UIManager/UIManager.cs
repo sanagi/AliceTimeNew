@@ -1,19 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
-using KamioriInput;
 using UnityEngine.UI;
 
 /// <summary>
 /// タッチ操作まで巻き取るかどうか(一旦気にしなくていいかも)
 /// </summary>
-public abstract class UIManager : MonoBehaviour, IKeyEventHandler, ITouchEventHandler
+public abstract class UIManager : MonoBehaviour
 {
 	protected Canvas _myCanvas;
-    public abstract void DoCrossKeyEvent (KeyInfo info);
-	public abstract void DoJumpKey (KeyInfo info);
-	public abstract bool DoTouchBegan (TouchInfo[] info);
-	public abstract bool DoTouchMoved (TouchInfo[] info);
-	public abstract bool DoTouchEnded (TouchInfo[] info);
+	
 	public virtual int MyOrder (){
 		return 0;
 	}
@@ -28,8 +23,6 @@ public abstract class UIManager : MonoBehaviour, IKeyEventHandler, ITouchEventHa
 
     public void Initialization(Canvas canvas) 
 	{
-		AliceInputManager.RegisterTouchEventHandler (this);
-		
 		_myCanvas = canvas;
 		_myCanvas.renderMode = RenderMode.ScreenSpaceCamera;
 		_myCanvas.worldCamera = CameraManager.Instance.GetUiCamera();
@@ -37,7 +30,7 @@ public abstract class UIManager : MonoBehaviour, IKeyEventHandler, ITouchEventHa
 
     public void Finalization()
 	{
-		AliceInputManager.UnregisterTouchEventHandler (this);
+		
 	}
     
     protected void Set3DScale(RawImage image3D)
@@ -51,40 +44,7 @@ public abstract class UIManager : MonoBehaviour, IKeyEventHandler, ITouchEventHa
 	    image3D.rectTransform.localScale = localScale;
     }
 
-	#region IKeyEventHandler implementation
-
-	public void OnCrossKeyEvent (KeyInfo info)
-	{
-        DoCrossKeyEvent (info);
-	}
-
-	public void OnJumpKeyEvent (KeyInfo info)
-	{
-		DoJumpKey (info);
-	}
-
-	#endregion
-
-	#region IInputEventHandler implementation
-
-	bool ITouchEventHandler.OnTouchEventBegan (TouchInfo[] touchInfo)
-	{
-		return DoTouchBegan (touchInfo);
-	}
-
-	bool ITouchEventHandler.OnTouchEventEnded (TouchInfo[] touchInfo)
-	{
-		return DoTouchEnded (touchInfo);
-	}
-
-	bool ITouchEventHandler.OnTouchEventMoved (TouchInfo[] touchInfo)
-	{
-		return DoTouchMoved (touchInfo);
-	}
-
-	#endregion
-
-	public int Order {
+    public int Order {
 		get {
 			return MyOrder();
 		}

@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
-using KamioriInput;
 using Rewired;
 using DG.Tweening;
 using R3;
@@ -12,7 +11,7 @@ public delegate Vector3 HijackMove(PlayerController player, Vector3 input, Vecto
 public delegate void HijackAnimation(PlayerController player, Vector3 input, Vector3 currentMove);
 
 [System.Serializable]
-public abstract class PlayerController : MonoBehaviour, IKeyEventHandler
+public abstract class PlayerController : MonoBehaviour
 {
     // ギミックなどで動きを掌握するための
     public HijackMove hijackMove;
@@ -912,30 +911,6 @@ public abstract class PlayerController : MonoBehaviour, IKeyEventHandler
                 Jump();
             });
     }
-
-    #region IKeyEventHandler implementation
-    public void OnCrossKeyEvent(KeyInfo info)
-    {
-#if UNITY_SWITCH
-        return;
-#else
-        if (!isControllable) return;
-        var preInput = currentInput;
-
-        currentInput.x = 0f;
-        currentInput.x += info.Right;
-        currentInput.x -= info.Left;
-
-        currentInput.y = 0f;
-        currentInput.y += info.Up;
-        currentInput.y -= info.Down;
-
-        if (info.Jump == 1) {
-            Jump();
-        }
-#endif
-    }
-    #endregion
 
     #region IInputEventHandler implementation
     public int Order

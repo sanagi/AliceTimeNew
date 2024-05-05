@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using KamioriInput;
 using Rewired;
 using R3;
 
@@ -17,9 +16,6 @@ public class AliceInputManager : SingletonMonoBehaviour<AliceInputManager>
 		KeyMouse,
 		Controller,
 	}
-	
-	private static TouchInputManager touchInputManager;
-	//private static KeyInputManager keyInputManager;
 
 	public InputType CurrentInput = InputType.KeyMouse;
 
@@ -44,7 +40,7 @@ public class AliceInputManager : SingletonMonoBehaviour<AliceInputManager>
 	public ReadOnlyReactiveProperty<bool> RightRotate => _rightRotate;
 	
 	/// <summary>
-	/// ジャンプ入力
+	/// 左に回すボタン入力
 	/// </summary>
 	public ReadOnlyReactiveProperty<bool> LeftRotate => _leftRotate;	
 
@@ -68,8 +64,6 @@ public class AliceInputManager : SingletonMonoBehaviour<AliceInputManager>
 		_leftRotate.AddTo(this);
 
 		_player = ReInput.players.GetPlayer(0);
-		
-		touchInputManager = (new GameObject ("TouchInputManager")).AddComponent<TouchInputManager> ();
 	}
 
 	private void Update()
@@ -111,33 +105,8 @@ public class AliceInputManager : SingletonMonoBehaviour<AliceInputManager>
 		base.Init ();
 	}
 
-	public static void RegisterTouchEventHandler(ITouchEventHandler eventHandler)
-	{
-        if (touchInputManager != null) {
-			touchInputManager.RegisterEventHandler (eventHandler);
-			return;
-		}
-        Debug.LogWarning ("【KamioriInput】InputManager is null");
-	}
-
-	public static void UnregisterTouchEventHandler(ITouchEventHandler eventHandler)
-	{
-        if (touchInputManager != null) {
-			touchInputManager.UnregisterEventHandler (eventHandler);
-        }
-	}
-
 	public static void ClearInput() {
 		
-		if(touchInputManager == null) return;
-		// preClear
-		foreach(var info in touchInputManager.InfoManager.InputInfo) {
-			info.deltaDistance = Vector3.zero;
-			info.deltaTime = 0f;
-		}
-
-		// clear
-        touchInputManager.ClearInput();
 	}
 
 	/// <summary>

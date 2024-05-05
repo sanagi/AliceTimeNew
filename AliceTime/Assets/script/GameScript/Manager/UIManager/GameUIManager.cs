@@ -1,7 +1,5 @@
-﻿
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections.Generic;
-using KamioriInput;
 using Rewired;
 
 // ゲーム中のバーチャルコントローラを除くUIを管理
@@ -105,28 +103,6 @@ public class GameUIManager : UIManager
         }
         DisableInput();
     }
-
-
-    #region implemented abstract members of UIManager
-    public override void DoCrossKeyEvent(KeyInfo info) { }
-
-    public override void DoJumpKey(KeyInfo info) { }
-
-    public override bool DoTouchBegan(TouchInfo[] info)
-    {
-        return false;
-    }
-
-    public override bool DoTouchMoved(TouchInfo[] info)
-    {
-       return false;
-    }
-
-    public override bool DoTouchEnded(TouchInfo[] info)
-    {
-        return false;
-    }
-    #endregion
 
     public override int MyOrder()
     {

@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
-using KamioriInput;
 using Rewired;
 using UnityEngine.UI;
 
@@ -113,27 +112,6 @@ public class ExploreUIManager : UIManager
         _3dImage = rawImage;
         Set3DScale(_3dImage);
     }
-
-    #region implemented abstract members of UIManager
-    public override void DoCrossKeyEvent(KeyInfo info) { }
-
-    public override void DoJumpKey(KeyInfo info) { }
-
-    public override bool DoTouchBegan(TouchInfo[] info)
-    {
-        return false;
-    }
-
-    public override bool DoTouchMoved(TouchInfo[] info)
-    {
-       return false;
-    }
-
-    public override bool DoTouchEnded(TouchInfo[] info)
-    {
-        return false;
-    }
-    #endregion
 
     public override int MyOrder()
     {

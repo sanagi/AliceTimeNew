@@ -2,7 +2,6 @@
 using UnityEngine;
 using System.Collections;
 using Rewired;
-using KamioriInput;
 using System.Collections.Generic;
 using InputSupport;
 using R3;
@@ -141,14 +140,6 @@ public class KeyPointController : MonoBehaviour
         Vector3 simulatePos = transform.position;
         simulatePos.x += Offsettouch.x;
         simulatePos.y += Offsettouch.y;
-
-        List<TouchInfo> touches = new List<TouchInfo>();
-
-        TouchInfo info = new TouchInfo();
-        info.deltaTime = Time.deltaTime;
-        info.Id = -1;
-
-        TouchInputManager.Instance.HandlerManager.FireEvent(touches);
     }
 
     /// <summary>
