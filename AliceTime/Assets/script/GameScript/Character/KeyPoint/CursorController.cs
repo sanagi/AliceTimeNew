@@ -10,11 +10,15 @@ using UnityEngine.Serialization;
 public class CursorController : MonoBehaviour
 {
     private Vector3 targetPosition;
-    private Vector3 TargetPosition
+    public Vector3 TargetPosition
     {
         set
         {
             targetPosition = new Vector3(value.x, value.y, GameDefine.Z_POS_0);
+        }
+        get
+        {
+            return targetPosition;
         }
     }
 
@@ -26,7 +30,9 @@ public class CursorController : MonoBehaviour
     private Camera _uiCamera;
     
     bool _alreadyPoint = false;
-    
+
+    public Action PointAction;
+
     void Awake()
     {
         _transform = transform;
@@ -45,12 +51,16 @@ public class CursorController : MonoBehaviour
         _aliceInputManager.Point.
             //ボタンが押されて
             Where(x => x && !_alreadyPoint)
-            .Subscribe(_ =>
-            {
-                var tempPos = CameraManager.Instance.GetUiPos(targetPosition);
-                EffectManager.Instance.PlayEffect(EffectId.TouchHit, tempPos, Quaternion.identity, FadeManager.Instance.FadeCanvas.transform);      //エフェクト発行
-                _alreadyPoint = true;
-            });
+                .Subscribe(_ =>
+                {
+                    var tempPos = CameraManager.Instance.GetUiPos(targetPosition);
+                    EffectManager.Instance.PlayEffect(EffectId.TouchHit, tempPos, Quaternion.identity, FadeManager.Instance.FadeCanvas.transform);      //エフェクト発行
+                    _alreadyPoint = true;
+                    
+                    //GearManager等から処理を登録された関数などがあればそれも処理する
+                    PointAction?.Invoke();
+                });
+        
         _aliceInputManager.PointRelease.Where(x=>x).Subscribe(_ =>
         {
             _alreadyPoint = false;

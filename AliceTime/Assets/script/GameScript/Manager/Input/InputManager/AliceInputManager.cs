@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using Rewired;
@@ -51,11 +52,26 @@ public class AliceInputManager : SingletonMonoBehaviour<AliceInputManager>
 	/// 右に回すボタン
 	/// </summary>
 	public ReadOnlyReactiveProperty<bool> RightRotate => _rightRotate;
-	
+
 	/// <summary>
 	/// 左に回すボタン入力
 	/// </summary>
-	public ReadOnlyReactiveProperty<bool> LeftRotate => _leftRotate;	
+	public ReadOnlyReactiveProperty<bool> LeftRotate => _leftRotate;
+	
+	/// <summary>
+	/// 右に回すボタン(Down)
+	/// </summary>
+	public ReadOnlyReactiveProperty<bool> RightRotateDown => _rightRotateDown;
+	
+	/// <summary>
+	/// 左に回すボタン入力(Down)
+	/// </summary>
+	public ReadOnlyReactiveProperty<bool> LeftRotateDown => _leftRotateDown;	
+	
+	/// <summary>
+	/// 自動で回すボタン
+	/// </summary>
+	public ReadOnlyReactiveProperty<bool> AutoRotate => _autoRotate;
 
 	// 実装
 	private readonly ReactiveProperty<bool> _rewind = new ReactiveProperty<bool>();
@@ -64,10 +80,20 @@ public class AliceInputManager : SingletonMonoBehaviour<AliceInputManager>
 	private readonly ReactiveProperty<bool> _pointRelease = new ReactiveProperty<bool>();	
 	private readonly ReactiveProperty<bool> _rightRotate = new ReactiveProperty<bool>();
 	private readonly ReactiveProperty<bool> _leftRotate = new ReactiveProperty<bool>();
+	private readonly ReactiveProperty<bool> _rightRotateDown = new ReactiveProperty<bool>();
+	private readonly ReactiveProperty<bool> _leftRotateDown = new ReactiveProperty<bool>();
+	private readonly ReactiveProperty<bool> _autoRotate = new ReactiveProperty<bool>();
 	private readonly ReactiveProperty<Vector3> _moveDirection = new ReactiveProperty<Vector3>();
 	private readonly ReactiveProperty<Vector3> _keyPointMoveDirection = new ReactiveProperty<Vector3>();
 	
 	private Player _player;
+
+	[SerializeField]
+	private CursorController _cursorController;
+	public Vector3 CursorPos()
+	{
+		return _cursorController.TargetPosition;
+	}
 	private void Awake()
 	{
 		_rewind.AddTo(this);
@@ -94,6 +120,9 @@ public class AliceInputManager : SingletonMonoBehaviour<AliceInputManager>
 		
 		_rightRotate.Value = _player.GetButton(GameDefine.RIGHT_ROTATE);
 		_leftRotate.Value = _player.GetButton(GameDefine.LEFT_ROTATE);
+		_rightRotateDown.Value = _player.GetButtonDown(GameDefine.RIGHT_ROTATE);
+		_leftRotateDown.Value = _player.GetButtonDown(GameDefine.LEFT_ROTATE);
+		_autoRotate.Value = _player.GetButtonDown(GameDefine.AUTO_ROTATE);
 
 		Vector3 currentInputAxis = Vector3.zero;
 		currentInputAxis.x = _player.GetAxis(GameDefine.ACTION_MOVE_HORIZONTAL);
@@ -108,15 +137,27 @@ public class AliceInputManager : SingletonMonoBehaviour<AliceInputManager>
 	}
 
 	/// <summary>
-	/// rewiredにはポインタ取得が無いため
+	/// rewiredにはマウスポインタ取得が無いため
 	/// </summary>
 	/// <returns></returns>
 	public Vector3 GetMouseScreenPos()
 	{
-		return CameraManager.Instance.GetUiCamera().ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, GameDefine.Z_POS_0));
+		if (CurrentInput == InputType.KeyMouse)
+		{
+			return CameraManager.Instance.GetUiCamera().ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, GameDefine.Z_POS_0));
+		}
+		else
+		{
+			return  Vector3.zero;
+		}
 	}
 
 	public static void ClearInput() {
 		
+	}
+	
+	public void SetPointAction(Action pointAction)
+	{
+		_cursorController.PointAction = pointAction;
 	}
 }

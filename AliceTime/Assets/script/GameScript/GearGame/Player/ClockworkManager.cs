@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.AI;
+using R3;
 
 namespace Alice
 {
@@ -42,31 +44,41 @@ namespace Alice
         /// <summary>カーブ設定</summary>
         [SerializeField]
         private AnimationCurve _lastWaveCurve = null;
+
+        [SerializeField]
+        private GearGameParam _gearGameParam;
         private float _lastWaveNow = 0;
         private float _lastWaveSign = 1;
 
+        private AliceInputManager _aliceInputManager;
+        private CursorController _cursorController;
 
-
+        private void Start()
+        {
+            _aliceInputManager = AliceInputManager.Instance;
+            _aliceInputManager.SetPointAction(SetPoint);
+        }
 
         /// <summary>
         /// 更新処理
         /// </summary>
         private void Update()
         {
-            UpdateTouch();
             UpdateGear();
         }
 
         /// <summary>
         /// 更新処理
         /// </summary>
-        private void UpdateTouch()
+        private void SetPoint()
         {
-            if (!Input.GetKeyDown(KeyCode.Mouse0))
-            {
-                return;
-            }
-            var tempRay = _mainCamera.ScreenPointToRay(Input.mousePosition);
+            // 実際のマウス位置とのずれを考慮
+            // RenderTextureを使っているため
+            var screenPosCursor = _mainCamera.WorldToScreenPoint(_aliceInputManager.CursorPos());
+
+            //補正位置からレイを発射
+            var tempRay = _mainCamera.ScreenPointToRay(screenPosCursor);
+            
             _debugRay.transform.position = (tempRay.origin + (tempRay.direction / 2));
             _debugRay.transform.rotation = Quaternion.LookRotation(tempRay.direction, Vector3.up);
 
@@ -95,15 +107,20 @@ namespace Alice
         /// </summary>
         private void UpdateGear()
         {
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                _autoRotation = !_autoRotation;
-                if (!_autoRotation)
+            _aliceInputManager.AutoRotate.
+                //ボタンが押されて
+                Where(x => x)
+                .ThrottleFirst(TimeSpan.FromSeconds(_gearGameParam.NextButtonDelay))
+                .Subscribe(_ =>
                 {
-                    _lastWaveSign = 1;
-                    _lastWaveNow = 1;
-                }
-            }
+                    _autoRotation = !_autoRotation;
+                    if (!_autoRotation)
+                    {
+                        _lastWaveSign = 1;
+                        _lastWaveNow = 1;
+                    }
+                });
+            
             _targetProgressSecBg += Time.deltaTime;
 
             if (_autoRotation)
@@ -112,9 +129,9 @@ namespace Alice
             }
             else
             {
-                if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
+                if (_aliceInputManager.LeftRotate.CurrentValue)
                 {
-                    if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
+                    if (_aliceInputManager.LeftRotateDown.CurrentValue)
                     {
                         _targetProgressSecNow -= .5f;
                     }
@@ -126,9 +143,9 @@ namespace Alice
                     _lastWaveNow = 1;
                 }
                 else
-                if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
+                if (_aliceInputManager.RightRotate.CurrentValue)
                 {
-                    if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
+                    if (_aliceInputManager.RightRotateDown.CurrentValue)
                     {
                         _targetProgressSecNow += .5f;
                     }
@@ -146,7 +163,7 @@ namespace Alice
             }
 
             _targetProgressSecLog = Mathf.Lerp(_targetProgressSecNow, _targetProgressSecLog, 0.5f);
-            _cubemapMaterial.SetFloat("_Rotation", _targetProgressSecBg + _targetProgressSecLog);
+            _cubemapMaterial.SetFloat(GameDefine._ROTATION, _targetProgressSecBg + _targetProgressSecLog);
 
             float tempWave = 0;
             if (_lastWaveNow > 0)

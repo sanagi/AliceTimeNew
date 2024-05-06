@@ -71,6 +71,7 @@ public static class GameDefine
     public const string ACTION_MOVE_KEYPOINT_VERTICAL = "ACTION_MOVE_VERTICAL_KEYPOINT0";
     public const string RIGHT_ROTATE= "ROTATE_GEAR_Right";
     public const string LEFT_ROTATE = "ROTATE_GEAR_Left";
+    public const string AUTO_ROTATE = "ROTATE_GEAR_Auto";
 
     #endregion
 
@@ -206,5 +207,11 @@ public static class GameDefine
     #endregion
 
     #endregion
-    
+
+    #region Shader
+
+    public const string _ROTATION = "_Rotation";
+
+
+    #endregion
 }
