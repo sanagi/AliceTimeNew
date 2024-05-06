@@ -11,6 +11,15 @@ using R3;
 /// </summary>
 public class AliceInputManager : SingletonMonoBehaviour<AliceInputManager>
 {
+	public enum InputType
+	{
+		KeyMouse,
+		Controller,
+	}
+
+	public InputType CurrentInput = InputType.KeyMouse;
+
+	
 	/// <summary>
 	/// プレイヤーの移動方向入力
 	/// </summary>
@@ -27,6 +36,18 @@ public class AliceInputManager : SingletonMonoBehaviour<AliceInputManager>
 	public ReadOnlyReactiveProperty<bool> Jump => _jump;
 	
 	/// <summary>
+	/// Pointerボタン入力
+	/// </summary>
+	public ReadOnlyReactiveProperty<bool> Point => _point;
+	public Observable<bool> PointObservable => _point;
+	
+	/// <summary>
+	/// Pointerボタン離した
+	/// </summary>
+	public ReadOnlyReactiveProperty<bool> PointRelease => _pointRelease;
+
+	
+	/// <summary>
 	/// 右に回すボタン
 	/// </summary>
 	public ReadOnlyReactiveProperty<bool> RightRotate => _rightRotate;
@@ -39,6 +60,8 @@ public class AliceInputManager : SingletonMonoBehaviour<AliceInputManager>
 	// 実装
 	private readonly ReactiveProperty<bool> _rewind = new ReactiveProperty<bool>();
 	private readonly ReactiveProperty<bool> _jump = new ReactiveProperty<bool>();
+	private readonly ReactiveProperty<bool> _point = new ReactiveProperty<bool>();
+	private readonly ReactiveProperty<bool> _pointRelease = new ReactiveProperty<bool>();	
 	private readonly ReactiveProperty<bool> _rightRotate = new ReactiveProperty<bool>();
 	private readonly ReactiveProperty<bool> _leftRotate = new ReactiveProperty<bool>();
 	private readonly ReactiveProperty<Vector3> _moveDirection = new ReactiveProperty<Vector3>();
@@ -50,6 +73,7 @@ public class AliceInputManager : SingletonMonoBehaviour<AliceInputManager>
 		_rewind.AddTo(this);
 
 		_jump.AddTo(this);
+		_point.AddTo(this);
 		_moveDirection.AddTo(this);
 		_keyPointMoveDirection.AddTo(this);
 		_rightRotate.AddTo(this);
@@ -62,7 +86,12 @@ public class AliceInputManager : SingletonMonoBehaviour<AliceInputManager>
 	{
 		// 各種入力をReactivePropertyに反映
 		_jump.Value = _player.GetButton(GameDefine.ACTION_JUMP);
+		
+		_point.Value = _player.GetButton(GameDefine.ACTION_POINT) || _player.GetButton(GameDefine.ACTION_POINT_GEAR) || _player.GetButton(GameDefine.ACTION_POINT_EXPLORE);
 
+		_pointRelease.Value = _player.GetButtonUp(GameDefine.ACTION_POINT) || _player.GetButtonUp(GameDefine.ACTION_POINT_GEAR) || _player.GetButtonUp(GameDefine.ACTION_POINT_EXPLORE);
+
+		
 		_rightRotate.Value = _player.GetButton(GameDefine.RIGHT_ROTATE);
 		_leftRotate.Value = _player.GetButton(GameDefine.LEFT_ROTATE);
 
@@ -76,12 +105,6 @@ public class AliceInputManager : SingletonMonoBehaviour<AliceInputManager>
 
 		_moveDirection.Value = currentInputAxis;
 		_keyPointMoveDirection.Value = currentInputKeyPointAxis;
-
-		if (IsClick())
-		{
-			var tempPos = CameraManager.Instance.GetUiPos(Input.mousePosition);
-			EffectManager.Instance.PlayEffect(EffectId.TouchHit, tempPos, Quaternion.identity, FadeManager.Instance.FadeCanvas.transform);      //エフェクト発行
-		}
 	}
 
 	/// <summary>
@@ -90,28 +113,10 @@ public class AliceInputManager : SingletonMonoBehaviour<AliceInputManager>
 	/// <returns></returns>
 	public Vector3 GetMouseScreenPos()
 	{
-		return Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, GameDefine.Z_POS_DANGION));
-	}
-
-	protected override void Init() {
-		base.Init ();
+		return CameraManager.Instance.GetUiCamera().ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, GameDefine.Z_POS_0));
 	}
 
 	public static void ClearInput() {
 		
-	}
-
-	/// <summary>
-	/// 初期化
-	/// </summary>
-	protected override void Initialize()
-	{
-		//マルチタッチを許可
-		Input.multiTouchEnabled = true;
-	}
-
-	public bool IsClick()
-	{
-		return Input.GetKeyDown(KeyCode.Mouse0);
 	}
 }

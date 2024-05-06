@@ -151,10 +151,12 @@ public class SystemManager : SingletonMonoBehaviour<SystemManager>
         
         //初期化
         InitializeApplication();
-        
-        //タイトルシーンへの遷移
-        MainSceneManager.Goto(GameDefine.TITLE);
 
+        if (!DebugManager.Instance.IsDebugMode || SceneManager.GetActiveScene().name == GameDefine.BOOT)
+        {
+            //デバッグモードでなければタイトルシーンへの遷移
+            MainSceneManager.Goto(GameDefine.TITLE);
+        }
     }
     /// <summary>
     /// オブジェクト破棄時

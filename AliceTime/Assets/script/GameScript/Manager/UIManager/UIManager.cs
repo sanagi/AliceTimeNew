@@ -40,7 +40,7 @@ public abstract class UIManager : MonoBehaviour
 	    var localScale = imageRect.localScale;
 
 	    float aspect = (float)Screen.width / (float)Screen.height;
-	    localScale.y *= aspect;
+	    localScale.y = aspect;
 	    image3D.rectTransform.localScale = localScale;
     }
 

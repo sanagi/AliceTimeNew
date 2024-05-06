@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using Rewired;
+using UnityEngine.UI;
 
 /// <summary>
 /// 現在プレイ中の情報と進行管理を集約する管理クラス
@@ -7,6 +8,9 @@ using Rewired;
 /// </summary>
 public class MainGameManager : MonoBehaviour
 {
+    [SerializeField]
+    private RawImage _3dImage;
+    
     public static void SetPlayStage(int stageId)
     {
         CurrentStageID = stageId;
@@ -72,6 +76,7 @@ public class MainGameManager : MonoBehaviour
 
         sceneManager.Initialization();
         uiManager.Initialization(_gameCanvas);
+        uiManager.Set3DRawImage(_3dImage);
 
         GameSceneManager.Goto(GameDefine.GAME_INIT);
     }

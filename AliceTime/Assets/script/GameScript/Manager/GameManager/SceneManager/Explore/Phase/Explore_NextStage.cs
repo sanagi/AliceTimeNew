@@ -25,7 +25,7 @@ public class Explore_NextStage : PhaseBase {
 			
 			//オーディオ関連の破棄
 
-			switch (AreaSelectSceneManager.NextMainScene)
+			switch (ExploreSceneManager.NextMainScene)
 			{
 				case MAINSCENE.AREASELECT:
 					//次のフロアへ遷移
@@ -35,6 +35,10 @@ public class Explore_NextStage : PhaseBase {
 					//探索シーンへ遷移
 					ExploreSceneManager.Goto(GameDefine.EXPLORE_INIT);
 					break;
+				case MAINSCENE.GAME:
+					//探索シーンへ遷移
+					MainSceneManager.Goto(GameDefine.GAME);
+					break;				
 			}
 		}));
 	}

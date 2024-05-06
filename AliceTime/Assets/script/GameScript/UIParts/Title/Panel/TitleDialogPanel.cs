@@ -9,7 +9,7 @@ public class TitleDialogPanel : TitlePanelBehaviour
     private PointerEventData pointer;
     private List<RaycastResult> result;
     private float uiTimer = 0.0f;
-    private bool selectedMove = false;
+    private bool _selectedMove = false;
 
     protected override void Init()
     {

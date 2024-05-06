@@ -47,6 +47,8 @@ public class DebugManager : SingletonMonoBehaviour<DebugManager> {
 	
 	[SerializeField]
 	private Text _displayAreaNameText;
+
+	public bool IsDebugMode = false;
 	
 	private void Start()
 	{

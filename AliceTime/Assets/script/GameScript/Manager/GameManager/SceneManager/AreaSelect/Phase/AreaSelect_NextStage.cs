@@ -36,6 +36,10 @@ public class AreaSelect_NextStage : PhaseBase {
 					//探索シーンへ遷移
 					MainSceneManager.Goto(GameDefine.Explore);
 					break;
+				case MAINSCENE.GAME:
+					//探索シーンへ遷移
+					MainSceneManager.Goto(GameDefine.GAME);
+					break;
 			}
 		}));
 	}

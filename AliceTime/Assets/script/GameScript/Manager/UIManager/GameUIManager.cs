@@ -1,10 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using Rewired;
+using UnityEngine.UI;
 
-// ゲーム中のバーチャルコントローラを除くUIを管理
-//Game画面だとSetActiveになる瞬間があるけど直接Worldに行っちゃうと(つづきから)だとSetActiveされずにこのクラスにアクセスされる時があった
-//ので初期化されていなかったら初期化(Monobehavior継承いらない気がしたけど時間かかりそう&これでも不具合でなさそうなので放置)
 public class GameUIManager : UIManager
 {
     public static GamePanelBehaviour CurrentPanel;
@@ -13,6 +11,8 @@ public class GameUIManager : UIManager
     IButtonEvent touchedButton;
 
     public static Player uiPlayer = null;
+    
+    private RawImage _3dImage;
 
     public static void RegistedPanel(GamePanelBehaviour panel)
     {
@@ -55,16 +55,10 @@ public class GameUIManager : UIManager
             panels = new List<GamePanelBehaviour>();
         }
     }
-
-#if UNITY_SWITCH
+    
     private void Update()
     {
-        if (uiPlayer == null)
-        {
-            uiPlayer = ReInput.players.GetPlayer(0);
-        }
     }
-#endif
 
     public static void DisplayPanel(GAMESCENE scene)
     {
@@ -104,6 +98,12 @@ public class GameUIManager : UIManager
         DisableInput();
     }
 
+    public void Set3DRawImage(RawImage rawImage)
+    {
+        _3dImage = rawImage;
+        Set3DScale(_3dImage);
+    }
+    
     public override int MyOrder()
     {
         return 400;

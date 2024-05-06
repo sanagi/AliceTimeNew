@@ -8,7 +8,7 @@ public static class GameDefine
 {
     #region physics
 
-    public const float Z_POS_DANGION = 0f;
+    public const float Z_POS_0 = 0f;
 
     #endregion
     
@@ -64,6 +64,9 @@ public static class GameDefine
     public const string ACTION_MOVE_HORIZONTAL = "ACTION_MOVE_HORIZONTAL";
     public const string ACTION_MOVE_VERTICAL = "ACTION_MOVE_VERTICAL";
     public const string ACTION_JUMP = "JUMP";
+    public const string ACTION_POINT = "POINT";
+    public const string ACTION_POINT_EXPLORE = "POINT_EXPLORE";
+    public const string ACTION_POINT_GEAR = "POINT_GEAR";
     public const string ACTION_MOVE_KEYPOINT_HORIZONTAL = "ACTION_MOVE_HORIZONTAL_KEYPOINT";
     public const string ACTION_MOVE_KEYPOINT_VERTICAL = "ACTION_MOVE_VERTICAL_KEYPOINT0";
     public const string RIGHT_ROTATE= "ROTATE_GEAR_Right";
@@ -110,6 +113,8 @@ public static class GameDefine
     #endregion
     
     #region GamePhase
+
+    public const string BOOT = "Boot";
 
     #region Title
     
