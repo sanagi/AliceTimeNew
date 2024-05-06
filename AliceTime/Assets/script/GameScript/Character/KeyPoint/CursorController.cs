@@ -47,7 +47,7 @@ public class CursorController : MonoBehaviour
             Where(x => x && !_alreadyPoint)
             .Subscribe(_ =>
             {
-                var tempPos = CameraManager.Instance.GetUiPos(Input.mousePosition);
+                var tempPos = CameraManager.Instance.GetUiPos(targetPosition);
                 EffectManager.Instance.PlayEffect(EffectId.TouchHit, tempPos, Quaternion.identity, FadeManager.Instance.FadeCanvas.transform);      //エフェクト発行
                 _alreadyPoint = true;
             });
