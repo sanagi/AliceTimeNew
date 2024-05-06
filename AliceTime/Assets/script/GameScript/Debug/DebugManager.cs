@@ -49,7 +49,19 @@ public class DebugManager : SingletonMonoBehaviour<DebugManager> {
 	private Text _displayAreaNameText;
 
 	public bool IsDebugMode = false;
-	
+
+	#region AreaSelect
+
+	public string DebugFloorId = "01";
+
+	#endregion
+
+	#region Explore
+
+	public string DebugExploreAreaId = "0105";
+
+	#endregion
+
 	private void Start()
 	{
 		DontDestroyOnLoad (gameObject);

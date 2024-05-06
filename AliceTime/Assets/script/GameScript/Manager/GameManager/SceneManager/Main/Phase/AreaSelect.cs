@@ -30,13 +30,13 @@ public class AreaSelect : PhaseBase {
 			}
 		}
 		
-		var sceneName = GameDefine.AreaSelect;
-		if (SelectedID == "-1")
+		//デバッグモードでの起動なら強制的にID切り替え
+		if (DebugManager.Instance.IsDebugMode)
 		{
-			sceneName = "DebugWorldGameScene";
+			SelectedID = DebugManager.Instance.DebugFloorId;
 		}
 		
-		LoadManager.Instance.Transition(sceneName, LoadSceneMode.Single, () => {
+		LoadManager.Instance.Transition(GameDefine.AreaSelect, LoadSceneMode.Single, () => {
             // [Rewired] enable key map
             var player = ReInput.players.GetPlayer(0);
             player.controllers.maps.SetAllMapsEnabled(false);

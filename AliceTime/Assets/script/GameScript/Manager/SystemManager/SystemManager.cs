@@ -152,10 +152,35 @@ public class SystemManager : SingletonMonoBehaviour<SystemManager>
         //初期化
         InitializeApplication();
 
-        if (!DebugManager.Instance.IsDebugMode || SceneManager.GetActiveScene().name == GameDefine.BOOT)
+        //Bootからの起動ならデバッグモードではないはず
+        if (SceneManager.GetActiveScene().name == GameDefine.BOOT)
         {
-            //デバッグモードでなければタイトルシーンへの遷移
+            DebugManager.Instance.IsDebugMode = false;
+        }
+        
+        //デバッグモードでなければタイトルシーンへの遷移
+        if (!DebugManager.Instance.IsDebugMode)
+        {
             MainSceneManager.Goto(GameDefine.TITLE);
+        }
+        else
+        {
+            //シーンごとの直接起動なら、初期化を通すために現在のシーンへ再度遷移させる
+            switch (SceneManager.GetActiveScene().name)
+            {
+                case GameDefine.TITLE:
+                    MainSceneManager.Goto(GameDefine.TITLE);
+                    break;
+                case GameDefine.Explore:
+                    MainSceneManager.Goto(GameDefine.Explore);
+                    break;
+                case GameDefine.AreaSelect:
+                    MainSceneManager.Goto(GameDefine.AreaSelect);
+                    break;
+                case GameDefine.GAME:
+                    MainSceneManager.Goto(GameDefine.GAME);
+                    break;
+            }
         }
     }
     /// <summary>

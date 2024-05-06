@@ -31,6 +31,12 @@ public class Explore : PhaseBase {
 			}
 		}
 		
+		//デバッグモードでの起動なら強制的にID切り替え
+		if (DebugManager.Instance.IsDebugMode)
+		{
+			SelectedID = DebugManager.Instance.DebugExploreAreaId;
+		}		
+		
         LoadManager.Instance.Transition(sceneName, LoadSceneMode.Single, () => {
             // [Rewired] enable key map
             var player = ReInput.players.GetPlayer(0);
