@@ -75,9 +75,14 @@ namespace Alice
             // 実際のマウス位置とのずれを考慮
             // RenderTextureを使っているため
             var screenPosCursor = _mainCamera.WorldToScreenPoint(_aliceInputManager.CursorPos());
+            // 実際のマウス位置とのずれを計算
+            Vector3 screenOffset = screenPosCursor - _mainCamera.WorldToScreenPoint(_mainCamera.transform.position);
+
+            // Rayの発射位置を補正
+            Vector3 correctedMousePosition = screenPosCursor - screenOffset;
 
             //補正位置からレイを発射
-            var tempRay = _mainCamera.ScreenPointToRay(screenPosCursor);
+            var tempRay = _mainCamera.ScreenPointToRay(correctedMousePosition);
             
             _debugRay.transform.position = (tempRay.origin + (tempRay.direction / 2));
             _debugRay.transform.rotation = Quaternion.LookRotation(tempRay.direction, Vector3.up);

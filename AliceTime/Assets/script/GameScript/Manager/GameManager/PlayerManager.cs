@@ -38,51 +38,7 @@ public class PlayerManager : SingletonMonoBehaviour<PlayerManager>
     {
         _cameraTarget = new GameObject("CameraTarget").transform;
     }
-    private void Update()
-    {
-        /*if (_currentPlayer.IsControllable())
-        {
-            _cameraTarget.position = _currentPlayer.transform.position;
-        }
-        */
-    }
-
-    public void MoveCameraTarget(float duration, Ease easeType, RotateController.PlaneType planeType)
-    {
-        /*switch (planeType)
-        {
-            case RotateController.PlaneType.XY:
-                _cameraTarget.SetParent(_xyPlayer.transform);
-                break;
-            case RotateController.PlaneType.YZ:
-                _cameraTarget.SetParent(_yzPlayer.transform);
-            break;
-        }
-        _cameraTarget.DOLocalMove(Vector3.zero, duration).SetEase(easeType).OnComplete(() =>
-        {
-            _cameraTarget.localPosition = Vector3.zero;
-        });
-        */
-    }
-    /*public void ChangePlayer(RotateController.PlaneType planeType)
-    {
-        switch (planeType)
-        {
-            case RotateController.PlaneType.XY:
-                EnableXYPlayer();
-                DisableYZPlayer();
-                _currentPlayer = _xyPlayer;
-                break;
-            case RotateController.PlaneType.YZ:
-                EnableYZPlayer();
-                DisableXYPlayer();
-                _currentPlayer = _yzPlayer;
-                break;
-        }
-
-        //CameraManager.Instance.GamePlayCamera.ChangeTarget(_currentPlayer.transform);
-    }*/
-
+    
     public void WakeUpRigidBody()
     {
         if (_currentPlayer == null)
@@ -125,58 +81,6 @@ public class PlayerManager : SingletonMonoBehaviour<PlayerManager>
         _currentPlayer.DisableControllable();
     }
     
-    /*private void EnableXYPlayer()
-    {
-        if (_xyPlayer == null)
-        {
-            return;
-        }
-        _xyPlayer.EnablePhysics();
-        _xyPlayer.EnableControllable();
-    }
-    
-    private void DisableXYPlayer()
-    {
-        if (_xyPlayer == null)
-        {
-            return;
-        }
-        _xyPlayer.DisablePhysics();
-        _xyPlayer.DisableControllable();
-    }
-    
-    private void EnableYZPlayer()
-    {
-        if (_yzPlayer == null)
-        {
-            return;
-        }
-        _yzPlayer.EnablePhysics();
-        _yzPlayer.EnableControllable();
-    }
-    
-    private void DisableYZPlayer()
-    {
-        if (_yzPlayer == null)
-        {
-            return;
-        }
-        _yzPlayer.DisablePhysics();
-        _yzPlayer.DisableControllable();
-    }    
-    
-    /// <summary>
-    /// キャラクターをリスポーン
-    /// </summary>
-    public void Respawn()
-    {
-        if (_currentPlayer == null)
-        {
-            return;
-        }
-        _currentPlayer.Respawn();
-    }
-    */
     
     public PlayerController.STATE CurrentState { get { return _currentPlayer.CurrentState; } }
     public void SetState(PlayerController.STATE state)
